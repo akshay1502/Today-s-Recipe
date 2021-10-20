@@ -2,4 +2,20 @@
   margin:0;
   padding:0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --navbar-bg-color: #2A222D;
+  --logo-color: #ECBB5C;
+  --background-color: #FFF6E3;
+  --navbar-text-color: #FBFBFB;
+  --heading: #000000;
+  --text-primary: #272727;
+  --text-secondary: #5C5959;
+  
+  --light-font: 300;
+  --regular-font: 400;
+  --semi-bold-font: 600;
+  --bold-font: 700;
 }
