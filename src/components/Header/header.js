@@ -2,7 +2,7 @@ import React from 'react';
 import { FaUserCircle, FaAngleDown } from 'react-icons/fa';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BiLogIn } from 'react-icons/bi';
-import './header.css';
+import './header.scss';
 
 export default function Header() {
   return (
