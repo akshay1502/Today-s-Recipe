@@ -1,0 +1,44 @@
+.grid {
+  padding: 40px 64px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-column-gap: 80px;
+}
+
+.card {
+  margin-bottom: 40px;
+  > img{
+    width: 100%;
+    height: 350px;
+    border-radius: 5px 5px 0 0;
+  }
+}
+
+.description {
+
+  & h4 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-weight: 600;
+  }
+
+  & .descriptionFooter {
+    margin-top: 8px;
+    & .userInfo {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      > img {
+        margin-right: 10px;
+        width: 34px;
+        height: 34px;
+      }
+      & p:last-child {
+        font-weight: 300;
+      }
+    }
+  }
+}
+
