@@ -6,6 +6,7 @@
 }
 
 .card {
+  margin-bottom: 40px;
   > img{
     width: 100%;
     height: 350px;
@@ -20,19 +21,22 @@
     overflow: hidden;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    font-weight: 600;
   }
 
   & .descriptionFooter {
+    margin-top: 8px;
     & .userInfo {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      img {
-        margin-right: 10px;
-      }
       > img {
+        margin-right: 10px;
         width: 34px;
         height: 34px;
+      }
+      & p:last-child {
+        font-weight: 300;
       }
     }
   }
