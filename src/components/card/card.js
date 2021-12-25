@@ -1,8 +1,7 @@
-/* eslint-disable no-trailing-spaces */
 import React, { useEffect, useState } from 'react';
 import './card.scss';
 
-export default function card() {
+export default function Card() {
   const [recipes, setRecipes] = useState(null);
 
   useEffect(async () => {
