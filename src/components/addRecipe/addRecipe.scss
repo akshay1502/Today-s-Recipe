@@ -12,8 +12,27 @@
   }
 
   .InputImageContainer {
-    background-color: lightslategray;
-    width: 200px;
-    height: 200px;
+    background-color: #B7B7B7;
+    width: 60%;
+    height: 500px;
+    margin: 24px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    & button:first-child {
+      background-color: #5C5959;
+      color:white;
+      align-self: center;
+      border: none;
+      font-size: 20px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      &:hover {
+        filter: brightness(85%);
+      }
+    }
   }
 }

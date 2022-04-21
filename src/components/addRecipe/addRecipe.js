@@ -1,4 +1,5 @@
 import React from 'react';
+import MyEditor from '../editor/editor';
 import './addRecipe.scss';
 
 export default function AddRecipe() {
@@ -9,6 +10,7 @@ export default function AddRecipe() {
         <button type="button" onClick={() => document.getElementById('inputImage').click()}>Upload Recipe Image</button>
         <input type="file" style={{ display: 'none' }} id="inputImage" />
       </div>
+      <MyEditor />
     </div>
   );
 }
