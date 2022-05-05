@@ -20,3 +20,6 @@ Learnings
 - authentication (JWT)
 
 https://github.com/editor-js/awesome-editorjs#react (use react editorJS editor, best features and easy implementation)
+
+refacroting login and signup code and cleaning the css, merging them into one component.
+Alternative for images, or a logo or bannerImage of site.
