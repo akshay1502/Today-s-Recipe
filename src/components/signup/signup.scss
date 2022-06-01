@@ -22,7 +22,7 @@
     width: 100%;
     font-size: 16px;
     padding: 4px 8px;
-    margin-top: 4px;
+    margin-top: 2px;
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 80%);
   }
@@ -57,6 +57,9 @@
   }
   & small {
     display: block;
-    visibility: hidden;
+    font-size: 12.5px;
+    line-height: 16px;
+    color: var(--notification);
+    height: 16px;
   }
 }

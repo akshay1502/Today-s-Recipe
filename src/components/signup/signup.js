@@ -1,7 +1,11 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './signup.scss';
 
 export default function Signup() {
@@ -11,16 +15,95 @@ export default function Signup() {
     email: '',
     password: '',
   });
+  const [formErrors, setFormErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: 'Use 8 or more characters with a mix of alphabets, numbers and special characters.',
+  });
+
   const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+    switch (name) {
+      case 'firstName': {
+        const result = /^[a-zA-Z]+$/g.test(value);
+        const errorMsg = result ? '' : 'First name should contain only alphabets.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
+      case 'lastName': {
+        const result = /^[a-zA-Z]+$/g.test(value);
+        const errorMsg = result ? '' : 'Last name should contain only alphabets.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
+      case 'email': {
+        const result = /^\S+@\S+\.\S+$/.test(value);
+        const errorMsg = result ? '' : 'Enter a valid email address.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
+      case 'password': {
+        const result = /^(?=.*\d)(?=.*[!"#$%&'()*+,-.:;<=>?@[\]^_`])(?=.*[a-z]|[A-Z]).{8,}$/g.test(value);
+        const errorMsg = result ? '' : 'Use 8 or more characters with a mix of alphabets, numbers and special characters.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
+      default:
+        break;
+    }
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const {
+      firstName, lastName, email, password,
+    } = formValues;
+    const valueRequiredError = {};
+    if (!firstName.length) { valueRequiredError.firstName = 'First name is required'; }
+    if (!lastName.length) { valueRequiredError.lastName = 'Last name is required'; }
+    if (!email.length) { valueRequiredError.email = 'Email is required'; }
+    if (!password.length) { valueRequiredError.password = 'Password is required'; }
+    if (formErrors.firstName === '' && formErrors.lastName === '' && formErrors.email === '' && formErrors.password === '') {
+      const res = await fetch('http://localhost:5000/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(formValues),
+      });
+      const resData = await res.json();
+      if (resData.id) {
+        setFormValues({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+        });
+        window.location.href = '/';
+      } else {
+        toast.error(resData.message, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+        });
+      }
+    } else {
+      setFormErrors({ ...formErrors, ...valueRequiredError });
+    }
   };
   return (
     <div className="form">
       <img src="/assests/signupBanner.png" alt="SignupBannerImage" id="signupBannerImage" />
-      <form className="signupForm">
+      <form className="signupForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">
           <div>Create Account</div>
           <p>
@@ -40,7 +123,7 @@ export default function Signup() {
               value={formValues.firstName}
               onChange={handleInputChange}
             />
-            <small>error in firstName</small>
+            <small>{formErrors.firstName}</small>
           </div>
           <div>
             <label htmlFor="lastName">Last Name</label>
@@ -52,7 +135,7 @@ export default function Signup() {
               value={formValues.lastName}
               onChange={handleInputChange}
             />
-            <small>error in lastName</small>
+            <small>{formErrors.lastName}</small>
           </div>
         </div>
         <div>
@@ -65,7 +148,7 @@ export default function Signup() {
             value={formValues.email}
             onChange={handleInputChange}
           />
-          <small>error in firstName</small>
+          <small>{formErrors.email}</small>
         </div>
         <div>
           <label htmlFor="password">Password</label>
@@ -74,16 +157,17 @@ export default function Signup() {
             type="password"
             name="password"
             id="password"
-            placeholder="User@123"
+            placeholder="eg.user@123"
             value={formValues.password}
             onChange={handleInputChange}
           />
           <small style={{ visibility: 'visible' }}>
-            Use 8 or more characters with a mix of alphabets, numbers and special characters.
+            { formErrors.password }
           </small>
         </div>
         <input type="submit" value="Sign up" id="signupBtn" />
       </form>
+      <ToastContainer />
     </div>
   );
 }

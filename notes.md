@@ -23,3 +23,5 @@ https://github.com/editor-js/awesome-editorjs#react (use react editorJS editor, 
 
 refacroting login and signup code and cleaning the css, merging them into one component.
 Alternative for images, or a logo or bannerImage of site.
+
+login -> formErrors.password not being used as of now.(can remove it or add user friendly msg to the user to remember their password)

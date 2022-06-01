@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        { pathname === '/signup' || '/login' ? null : <Header /> }
+        { pathname === '/signup' || pathname === '/login' ? null : <Header /> }
         <Routes>
           <Route path="/" element={<Card />} />
           <Route path="addRecipe" element={<AddRecipe />} />
