@@ -4,7 +4,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import toastMsg from '../../helperFunctions/toast';
 import 'react-toastify/dist/ReactToastify.css';
 import './signup.scss';
 
@@ -86,15 +86,7 @@ export default function Signup() {
         });
         window.location.href = '/';
       } else {
-        toast.error(resData.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
+        toastMsg('error', resData.message);
       }
     } else {
       setFormErrors({ ...formErrors, ...valueRequiredError });
@@ -167,7 +159,6 @@ export default function Signup() {
         </div>
         <input type="submit" value="Sign up" id="signupBtn" />
       </form>
-      <ToastContainer />
     </div>
   );
 }

@@ -1,6 +1,3 @@
-use autogrow for increasing the height of the ckeditor dynamically.
-
-Will use editor.js has better YT video support, and clean documentation. Uninstall draft.js
 
 next goal
 1. complete addRecipe page (done)
@@ -25,3 +22,9 @@ refacroting login and signup code and cleaning the css, merging them into one co
 Alternative for images, or a logo or bannerImage of site.
 
 login -> formErrors.password not being used as of now.(can remove it or add user friendly msg to the user to remember their password)
+
+for text input, look for having atleast one word not one character.
+
+add spinner loader for await operations.
+
+make a fallback image for failed loading of image at anywhere(!!! on profile image in recipes)

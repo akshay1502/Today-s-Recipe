@@ -1,21 +1,24 @@
-.grid {
-  padding: 40px 64px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  grid-column-gap: 80px;
+.linkComponent {
+  text-decoration: none;
+  color: black;
 }
 
 .card {
-  margin-bottom: 40px;
+  margin-bottom: 32px;
+  cursor: pointer;
+  border-radius: 4px;
+  &:hover {
+    box-shadow: 1px 1px 4px lightslategrey;
+  }
   > img{
     width: 100%;
     height: 350px;
-    border-radius: 5px 5px 0 0;
+    border-radius: 4px 4px 0 0;
   }
 }
 
 .description {
-
+  padding: 0 8px 8px 8px;
   & h4 {
     display: -webkit-box;
     overflow: hidden;
@@ -30,13 +33,19 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      > img {
+      > img, > div {
         margin-right: 10px;
         width: 34px;
         height: 34px;
       }
       & p:last-child {
         font-weight: 300;
+      }
+      & .authorprofile { 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
       }
     }
   }

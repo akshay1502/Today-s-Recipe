@@ -1,0 +1,6 @@
+.grid {
+  padding: 40px 64px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
+  grid-column-gap: 80px;
+}

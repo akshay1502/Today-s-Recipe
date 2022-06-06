@@ -9,7 +9,7 @@ import Embed from '@editorjs/embed';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Checklist from '@editorjs/checklist';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import ToastMsg from '../../helperFunctions/toast';
+import toastMsg from '../../helperFunctions/toast';
 
 export default function AddRecipe() {
   const [previewSource, setPreviewSource] = useState('');
@@ -31,7 +31,7 @@ export default function AddRecipe() {
           class: Header,
           config: {
             placeholder: 'Enter a heading',
-            levels: [1, 2, 3],
+            levels: [2, 3],
             defaultLevel: 2,
           },
         },
@@ -96,14 +96,11 @@ export default function AddRecipe() {
       });
       const resData = await res.json();
       if (resData.id) {
-        console.log(resData.id);
+        toastMsg('info', resData.id);
       } else {
-        console.log(resData.message);
+        toastMsg('error', resData.message);
       }
     }
-    return (
-      <ToastMsg type="info" msg="success factor" />
-    );
   };
 
   const handleImageInput = (e) => {

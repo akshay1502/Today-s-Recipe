@@ -5,48 +5,72 @@
       "image": "/assests/food1.jpg",
       "title": "Lorem Ipsum is simply dummy text of the printing and typesetting.",
       "userImage": "/assests/face1.png", 
-      "userName": "Akshay Shinde",
-      "upload": "Sept 28"
+      "author": "Akshay Shinde",
+      "date": 1654108782000,
+      "likes": 14,
+      "comments": 230,
+      "ingredientList": ["onion", "tomato", "paneer"],
+      "recipe": "I am gonna make the paneer tikka. This is my first attemp in completing my project."
     },
     {
       "id": 2,
       "image": "/assests/food1.jpg",
       "title": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "userImage": "/assests/face1.png", 
-      "userName": "Akshay Shinde",
-      "upload": "Sept 28"
+      "author": "Akshay Shinde",
+      "date": 1654108782000,
+      "likes": 14,
+      "comments": 230,
+      "ingredientList": ["onion", "tomato", "paneer"],
+      "recipe": "I am gonna make the paneer tikka. This is my first attemp in completing my project."
     },
     {
       "id": 3,
       "image": "/assests/food1.jpg",
       "title": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "userImage": "/assests/face1.png", 
-      "userName": "Akshay Shinde",
-      "upload": "Sept 28"
+      "author": "Akshay Shinde",
+      "date": 1654108782000,
+      "likes": 14,
+      "comments": 230,
+      "ingredientList": ["onion", "tomato", "paneer"],
+      "recipe": "I am gonna make the paneer tikka. This is my first attemp in completing my project."
     },
     {
       "id": 4,
       "image": "/assests/food1.jpg",
       "title": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "userImage": "/assests/face1.png", 
-      "userName": "Akshay Shinde",
-      "upload": "Sept 28"
+      "author": "Akshay Shinde",
+      "date": 1654108782000,
+      "likes": 14,
+      "comments": 230,
+      "ingredientList": ["onion", "tomato", "paneer"],
+      "recipe": "I am gonna make the paneer tikka. This is my first attemp in completing my project."
     },
     {
       "id": 5,
       "image": "/assests/food1.jpg",
       "title": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "userImage": "/assests/face1.png", 
-      "userName": "Akshay Shinde",
-      "upload": "Sept 28"
+      "author": "Akshay Shinde",
+      "date": 1654108782000,
+      "likes": 14,
+      "comments": 230,
+      "ingredientList": ["onion", "tomato", "paneer"],
+      "recipe": "I am gonna make the paneer tikka. This is my first attemp in completing my project."
     },
     {
       "id": 6,
       "image": "/assests/food1.jpg",
       "title": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
       "userImage": "/assests/face1.png", 
-      "userName": "Akshay Shinde",
-      "upload": "Sept 28"
+      "author": "Akshay Shinde",
+      "date": 1654108782000,
+      "likes": 14,
+      "comments": 230,
+      "ingredientList": ["onion", "tomato", "paneer"],
+      "recipe": "I am gonna make the paneer tikka. This is my first attemp in completing my project."
     }
   ]
 }
