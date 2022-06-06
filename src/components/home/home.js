@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import Card from '../card/card';
 import './home.scss';
@@ -17,7 +18,7 @@ export default function Home() {
   return (
     <div className="grid">
       {
-        recipes && recipes.map((recipe) => <Card recipe={recipe} />)
+        recipes && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
       }
     </div>
   );
