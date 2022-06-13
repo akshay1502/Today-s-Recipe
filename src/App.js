@@ -10,6 +10,7 @@ import AddRecipe from './components/addRecipe/addRecipe';
 import Signup from './components/signup/signup';
 import Login from './components/login/login';
 import Recipes from './components/recipes/recipes';
+import Profile from './components/profile/profile';
 
 function App() {
   const { pathname } = window.location;
@@ -23,6 +24,7 @@ function App() {
           <Route path="signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
           <Route path="recipes/:id" element={<Recipes />} />
+          <Route path="profile" element={<Profile />} />
         </Routes>
         <ToastContainer />
       </div>

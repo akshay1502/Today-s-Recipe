@@ -14,7 +14,6 @@ export function RenderRecipe({ recipe }) {
 }
 
 export function RenderIngredients({ ingredients }) {
-  console.log(ingredients);
   useEffect(() => {
     document.getElementById('ingredientList').innerHTML = ingredients;
   });

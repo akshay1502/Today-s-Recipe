@@ -1,0 +1,61 @@
+.profile {
+  padding: 40px 64px;
+  display: flex;
+  & .self {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    & .authorprofile {
+      height: 240px;
+      width: 240px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      font-size: 80px;
+    }
+    & .name {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 1rem 0;
+    }
+    & .popularity {
+      margin-bottom: 2rem;
+      > p:first-child {
+        margin-bottom: 8px;   
+      }
+    }
+    & #editProfile {
+      color: var(--navbar-bg-color);
+      background-color: var(--logo-color);
+      border: none;
+      outline: none;
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
+  & .postsData {
+    width: 60%;
+    & .navigator {
+      margin-bottom: 2rem;
+      > button {  border: none;
+        background: none;
+        font-size: 24px;
+        font-weight: 600;
+        margin-right: 2rem;
+        cursor: pointer;
+      }
+    } 
+    .underline {
+      text-decoration: underline;
+      text-decoration-color: var(--logo-color);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 8px;
+    }
+  }
+}
