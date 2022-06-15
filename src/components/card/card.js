@@ -5,7 +5,7 @@ import './card.scss';
 export default function Card({ recipe, self }) {
   const date = new Date(recipe.date).toDateString().split(' ').slice(1);
   const uploadDate = `${date[1]} ${date[0]} ${date[2]}`;
-  console.log(self);
+  console.log(recipe.authorName);
   return (
     <Link to={`/recipes/${recipe._id}`} className="linkComponent" key={recipe._id}>
       <div key={recipe.id} className="card">
@@ -19,15 +19,15 @@ export default function Card({ recipe, self }) {
                 <>
                   {
                   recipe.authorProfileImage
-                    ? <img src={recipe.authorProfileImage} alt={recipe.author} />
+                    ? <img src={recipe.authorProfileImage} alt={recipe.authorName} />
                     : (
                       <div className="authorprofile" style={{ backgroundColor: `#${recipe.authorColorCode}` }}>
-                        {`${recipe.author[0]}`}
+                        {`${recipe.authorName[0]}`}
                       </div>
                     )
                   }
                   <p>
-                    {recipe.author}
+                    {recipe.authorName}
                     ,
                   </p>
                 </>

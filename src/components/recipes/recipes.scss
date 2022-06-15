@@ -32,6 +32,10 @@
       font-size: 18px;
       cursor: pointer;
     }
+    & .userLink {
+      text-decoration: none;
+      color: black;
+    }
   }
   & .uploadDate { 
     font-weight: 300; 

@@ -25,6 +25,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="recipes/:id" element={<Recipes />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="profile/:id" element={<Profile />} />
         </Routes>
         <ToastContainer />
       </div>

@@ -1,17 +1,20 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 import './profile.scss';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import fetchURL from '../../helperFunctions/fetch';
 import Card from '../card/card';
 
 export default function Profile() {
+  const { id } = useParams();
   const [user, setUser] = useState(null);
   const [selfRecipes, setSelfRecipes] = useState(null);
   const [bookmarkRecipes, setBookmarkRecipes] = useState(null);
   const [recipes, setRecipes] = useState(null);
   const [self, setSelf] = useState(true);
   useEffect(async () => {
-    const res = await fetch('http://localhost:5000/users/self', {
+    const res = await fetch(`http://localhost:5000/users/${id || 'self'}`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -21,15 +24,36 @@ export default function Profile() {
     setBookmarkRecipes(result.bookmarkRecipes);
   }, []);
   useEffect(async () => {
-    const result = await fetchURL('recipes/self', 'GET');
-    setSelfRecipes(result);
+    const result = await fetchURL(`recipes/users/${id || 'self'}`, 'GET');
     setRecipes(result);
+    setSelfRecipes(result);
+    console.log(result);
   }, []);
   const showRecipes = () => { setRecipes(selfRecipes); setSelf(true); };
   const showBookmarkRecipes = async () => {
-    const fetchBookmarkRecipes = await Promise.all(bookmarkRecipes.map(async (recipeId) => fetchURL(`recipes/${recipeId}`, 'GET')));
-    setSelf(false);
+    const fetchBookmarkRecipes = await Promise.all(bookmarkRecipes.map(async (recipeId) => {
+      const recipeData = await fetchURL(`recipes/${recipeId}`, 'GET');
+      return recipeData;
+    }));
     setRecipes(fetchBookmarkRecipes);
+    setSelf(false);
+  };
+  const style = `
+    text-decoration: underline;
+    text-decoration-color: var(--logo-color);
+    text-decoration-thickness: 4px;
+    text-underline-offset: 8px;
+  `;
+  const showUnderline = (e) => {
+    const myRecipes = document.getElementById('myRecipes');
+    const bookmarks = document.getElementById('bookmarks');
+    if (e.target.id === 'myRecipes') {
+      myRecipes.style.cssText = style;
+      bookmarks.style.cssText = '';
+    } else {
+      myRecipes.style.cssText = '';
+      bookmarks.style.cssText = style;
+    }
   };
   return (
     <>
@@ -68,11 +92,25 @@ export default function Profile() {
           </div>
           <div className="postsData">
             <div className="navigator">
-              <button type="button" onClick={showRecipes}>My recipes</button>
-              <button type="button" onClick={showBookmarkRecipes}>Bookmark</button>
+              <button
+                type="button"
+                id="myRecipes"
+                style={{
+                  textDecoration: 'underline',
+                  textDecorationThickness: '4px',
+                  textDecorationColor: 'var(--logo-color)',
+                  textUnderlineOffset: '8px',
+                }}
+                onClick={(e) => { showRecipes(); showUnderline(e); }}
+              >
+                My recipes
+
+              </button>
+              <button type="button" id="bookmarks" onClick={(e) => { showBookmarkRecipes(); showUnderline(e); }}>Bookmarks</button>
             </div>
-            { recipes
-              && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} self={self} />)}
+            { recipes && recipes.length
+              ? recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} self={self} />)
+              : <h1>0</h1>}
           </div>
         </div>
         )

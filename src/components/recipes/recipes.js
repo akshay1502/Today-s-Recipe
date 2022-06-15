@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import './recipes.scss';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import IconsPack from './icons';
 import { RenderRecipe, RenderIngredients } from './renderRecipeAndIngredients';
 import fetchURL from '../../helperFunctions/fetch';
@@ -37,6 +37,7 @@ export default function Recipes() {
     const parseIngredients = edjsParser.parse(getRecipeData.ingredients);
     const parseRecipe = edjsParser.parse(getRecipeData.recipe);
     setRecipeData(getRecipeData);
+    console.log(getRecipeData);
     setRecipe(parseRecipe);
     setIngredients(parseIngredients);
   }, []);
@@ -56,7 +57,7 @@ export default function Recipes() {
                   </div>
                 )
             }
-            <p>{recipeData.authorName}</p>
+            <Link className="userLink" to={`/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
             <Follow user={user} author={recipeData.author} authorName={recipeData.authorName} />
           </div>
           <p className="uploadDate">{new Date(recipeData.date).toDateString()}</p>
