@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import fetchURL from '../../helperFunctions/fetch';
 import './login.scss';
 
 export default function Login() {
@@ -15,6 +16,12 @@ export default function Login() {
     email: '',
     password: '',
   });
+  useEffect(async () => {
+    const { statusValue } = await fetchURL('users/self', 'GET');
+    if (statusValue === 200) {
+      window.location.href = '/';
+    }
+  }, []);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({

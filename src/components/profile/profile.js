@@ -24,15 +24,14 @@ export default function Profile() {
     setBookmarkRecipes(result.bookmarkRecipes);
   }, []);
   useEffect(async () => {
-    const result = await fetchURL(`recipes/users/${id || 'self'}`, 'GET');
+    const { result } = await fetchURL(`recipes/users/${id || 'self'}`, 'GET');
     setRecipes(result);
     setSelfRecipes(result);
-    console.log(result);
   }, []);
   const showRecipes = () => { setRecipes(selfRecipes); setSelf(true); };
   const showBookmarkRecipes = async () => {
     const fetchBookmarkRecipes = await Promise.all(bookmarkRecipes.map(async (recipeId) => {
-      const recipeData = await fetchURL(`recipes/${recipeId}`, 'GET');
+      const { result: recipeData } = await fetchURL(`recipes/${recipeId}`, 'GET');
       return recipeData;
     }));
     setRecipes(fetchBookmarkRecipes);

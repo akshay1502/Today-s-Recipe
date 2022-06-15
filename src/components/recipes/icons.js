@@ -14,14 +14,14 @@ export default function IconsPack({ recipe, user }) {
   const addToBookmark = async () => {
     if (bookmark) {
       bookmarkBtn.style.fill = 'var(--bookmark-btn)';
-      const result = await fetchURL(`recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
-      if (result) {
+      const { statusValue } = await fetchURL(`recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
+      if (statusValue === 200) {
         setBookmark(0);
       }
     } else {
       bookmarkBtn.style.fill = 'white';
-      const result = await fetchURL(`recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
-      if (result) {
+      const { statusValue } = await fetchURL(`recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
+      if (statusValue === 200) {
         setBookmark(1);
       }
     }
@@ -29,30 +29,14 @@ export default function IconsPack({ recipe, user }) {
   const likeRecipe = async () => {
     if (like) {
       likeBtn.style.fill = 'var(--like-btn)';
-      const res = await fetch(`http://localhost:5000/recipes/${recipeId}/likeOrdislike`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          like,
-        }),
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const result = await res.json();
-      if (result) {
+      const { statusValue } = await fetchURL(`recipes/${recipeId}/likeOrdislike`, 'PATCH', { like });
+      if (statusValue === 200) {
         setLike(0);
       }
     } else {
       likeBtn.style.fill = 'white';
-      const res = await fetch(`http://localhost:5000/recipes/${recipeId}/likeOrdislike`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          like,
-        }),
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const result = await res.json();
-      if (result) {
+      const { statusValue } = await fetchURL(`recipes/${recipeId}/likeOrdislike`, 'PATCH', { like });
+      if (statusValue === 200) {
         setLike(1);
       }
     }

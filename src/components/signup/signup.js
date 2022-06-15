@@ -2,11 +2,12 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import toastMsg from '../../helperFunctions/toast';
 import 'react-toastify/dist/ReactToastify.css';
 import './signup.scss';
+import fetchURL from '../../helperFunctions/fetch';
 
 export default function Signup() {
   const [formValues, setFormValues] = useState({
@@ -21,7 +22,12 @@ export default function Signup() {
     email: '',
     password: 'Use 8 or more characters with a mix of alphabets, numbers and special characters.',
   });
-
+  useEffect(async () => {
+    const { statusValue } = await fetchURL('users/self', 'GET');
+    if (statusValue === 200) {
+      window.location.href = '/';
+    }
+  }, []);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({

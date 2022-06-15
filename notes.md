@@ -34,3 +34,8 @@ pass state from app.js to login and signup and set the id from res.
 use Services for api mocking 
 
 useMemo and cache a lot of data as most as possible
+
+<div className="user">
+  <FaUserCircle size="2.5rem" />
+  <FaAngleDown size="1rem" />
+</div>

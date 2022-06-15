@@ -78,8 +78,8 @@ export default function Recipes() {
 function Follow({ user, author, authorName }) {
   const { _id, following } = user;
   const followUser = async (userId) => {
-    const result = await fetchURL(`users/${userId}/follow`, 'PATCH', { follow: 1 });
-    if (result) {
+    const { statusstaValue } = await fetchURL(`users/${userId}/follow`, 'PATCH', { follow: 1 });
+    if (statusstaValue === 200) {
       document.getElementById('follow').style.display = 'none';
       toastMsg('info', `You are following ${authorName}`);
     }
