@@ -5,7 +5,6 @@ import './card.scss';
 export default function Card({ recipe, self }) {
   const date = new Date(recipe.date).toDateString().split(' ').slice(1);
   const uploadDate = `${date[1]} ${date[0]} ${date[2]}`;
-  console.log(recipe.authorName);
   return (
     <Link to={`/recipes/${recipe._id}`} className="linkComponent" key={recipe._id}>
       <div key={recipe.id} className="card">

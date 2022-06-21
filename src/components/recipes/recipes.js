@@ -57,7 +57,7 @@ export default function Recipes() {
                   </div>
                 )
             }
-            <Link className="userLink" to={`/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
+            <Link className="userLink" to={user._id === recipeData.author ? '/profile' : `/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
             <Follow user={user} author={recipeData.author} authorName={recipeData.authorName} />
           </div>
           <p className="uploadDate">{new Date(recipeData.date).toDateString()}</p>

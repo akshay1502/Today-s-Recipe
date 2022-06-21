@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react';
-import { FaAngleDown } from 'react-icons/fa';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch, AiFillCaretDown } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import './header.scss';
 import fetchURL from '../../helperFunctions/fetch';
@@ -8,20 +9,37 @@ import fetchURL from '../../helperFunctions/fetch';
 export default function Header() {
   const [login, setLogin] = useState(false);
   const [user, setUser] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [searchBox, setSearchBox] = useState('');
   useEffect(async () => {
     const { result, statusValue } = await fetchURL('users/self', 'GET');
     if (statusValue === 200) {
       setLogin(true);
       setUser(result);
-      console.log(result);
     }
   }, []);
+  const showSubMenuHolder = () => {
+    setOpen(!open);
+  };
+  const logout = async () => {
+    const { statusValue } = await fetchURL('logout', 'GET');
+    if (statusValue === 200) {
+      console.log(statusValue);
+      window.location.href = '/';
+    }
+  };
   return (
-    <nav className="navbar">
-      <div className="navbar-brand">Today&apos;s Recipe</div>
+    <nav className="navbar local-bootstrap">
+      <Link to="/" className="navbar-brand">Today&apos;s Recipe</Link>
       <div className="navbar-input">
-        <input type="text" className="searchBox" />
-        <AiOutlineSearch size="2rem" />
+        <input
+          type="text"
+          id="searchBox"
+          name="searchBox"
+          value={searchBox}
+          onChange={(e) => setSearchBox(e.target.value)}
+        />
+        <AiOutlineSearch size="2rem" style={{ fill: 'white' }} />
       </div>
       <div className="navbar-menu">
         {!login && (
@@ -44,7 +62,16 @@ export default function Header() {
                     {`${user.firstName[0]}`}
                   </div>
                 )}
-              <FaAngleDown size="1rem" style={{ marginLeft: '8px' }} />
+              <AiFillCaretDown onClick={showSubMenuHolder} className="triangle" />
+              { open && (
+              <div id="subMenuHolder">
+                <ul className="subMenu">
+                  <Link to="/profile" onClick={() => setOpen(!open)}>Profile</Link>
+                  <Link to="/">Notifications</Link>
+                  <li onClick={logout}>Logout</li>
+                </ul>
+              </div>
+              )}
             </div>
           </>
           )

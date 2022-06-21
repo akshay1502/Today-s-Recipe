@@ -87,7 +87,7 @@ export default function Profile() {
                 Following
               </p>
             </div>
-            <button type="button" id="editProfile">Edit Profile</button>
+            { !id && <button type="button" id="editProfile">Edit Profile</button>}
           </div>
           <div className="postsData">
             <div className="navigator">

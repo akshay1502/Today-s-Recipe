@@ -24,3 +24,6 @@
   --semi-bold-font: 600;
   --bold-font: 700;
 }
+.btn:focus, .btn-primary:focus, .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: none !important;
+}
