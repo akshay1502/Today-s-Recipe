@@ -4,10 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import fetchURL from '../../helperFunctions/fetch';
 import './login.scss';
 
-export default function Login() {
+export default function Login({ user }) {
   const [formValues, setFormValues] = useState({
     email: '',
     password: '',
@@ -16,9 +15,8 @@ export default function Login() {
     email: '',
     password: '',
   });
-  useEffect(async () => {
-    const { statusValue } = await fetchURL('users/self', 'GET');
-    if (statusValue === 200) {
+  useEffect(() => {
+    if (user) {
       window.location.href = '/';
     }
   }, []);

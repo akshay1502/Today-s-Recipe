@@ -103,7 +103,6 @@ export default function Profile() {
                 onClick={(e) => { showRecipes(); showUnderline(e); }}
               >
                 My recipes
-
               </button>
               <button type="button" id="bookmarks" onClick={(e) => { showBookmarkRecipes(); showUnderline(e); }}>Bookmarks</button>
             </div>

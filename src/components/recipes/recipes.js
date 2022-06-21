@@ -11,21 +11,11 @@ const edjsHTML = require('editorjs-html');
 
 const edjsParser = edjsHTML();
 
-export default function Recipes() {
+export default function Recipes({ user }) {
   const { id } = useParams();
   const [recipeData, setRecipeData] = useState(null);
   const [recipe, setRecipe] = useState(null);
   const [ingredients, setIngredients] = useState(null);
-  const [user, setUser] = useState(null);
-  useEffect(async () => {
-    const res = await fetch('http://localhost:5000/users/self', {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const result = await res.json();
-    setUser(result);
-  }, []);
 
   useEffect(async () => {
     const fetchRecipe = await fetch(`http://localhost:5000/recipes/${id}`, {
@@ -37,7 +27,6 @@ export default function Recipes() {
     const parseIngredients = edjsParser.parse(getRecipeData.ingredients);
     const parseRecipe = edjsParser.parse(getRecipeData.recipe);
     setRecipeData(getRecipeData);
-    console.log(getRecipeData);
     setRecipe(parseRecipe);
     setIngredients(parseIngredients);
   }, []);

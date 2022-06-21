@@ -7,9 +7,8 @@ import { Link } from 'react-router-dom';
 import toastMsg from '../../helperFunctions/toast';
 import 'react-toastify/dist/ReactToastify.css';
 import './signup.scss';
-import fetchURL from '../../helperFunctions/fetch';
 
-export default function Signup() {
+export default function Signup({ user }) {
   const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
@@ -22,9 +21,8 @@ export default function Signup() {
     email: '',
     password: 'Use 8 or more characters with a mix of alphabets, numbers and special characters.',
   });
-  useEffect(async () => {
-    const { statusValue } = await fetchURL('users/self', 'GET');
-    if (statusValue === 200) {
+  useEffect(() => {
+    if (user) {
       window.location.href = '/';
     }
   }, []);
