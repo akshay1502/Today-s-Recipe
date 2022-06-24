@@ -13,6 +13,7 @@ import Login from './components/login/login';
 import Recipes from './components/recipes/recipes';
 import Profile from './components/profile/profile';
 import Temp from './temp';
+import Search from './components/search/search';
 import fetchURL from './helperFunctions/fetch';
 
 function App() {
@@ -28,18 +29,21 @@ function App() {
   return (
     <div className="App">
       { fetchStatus && <Header user={user} fetchStatus={fetchStatus} /> }
-      {user && (
-        <Routes>
-          <Route path="signup" element={<Signup user={user} />} />
-          <Route path="login" element={<Login user={user} />} />
+      <Routes>
+        <Route path="signup" element={<Signup user={user} />} />
+        <Route path="login" element={<Login user={user} />} />
+        {user && (
+        <>
           <Route path="/" element={<Home />} />
           <Route path="addRecipe" element={<AddRecipe />} />
           <Route path="recipes/:id" element={<Recipes user={user} />} />
           <Route path="profile" element={<Profile />} />
           <Route path="profile/:id" element={<Profile />} />
+          <Route path="search" element={<Search />} />
           <Route path="temp" element={<Temp />} />
-        </Routes>
-      )}
+        </>
+        )}
+      </Routes>
       <ToastContainer />
     </div>
   );

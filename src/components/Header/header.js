@@ -3,11 +3,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
 import { AiOutlineSearch, AiFillCaretDown } from 'react-icons/ai';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './header.scss';
 import fetchURL from '../../helperFunctions/fetch';
 
 export default function Header({ user, fetchStatus }) {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const [searchBox, setSearchBox] = useState('');
@@ -16,6 +17,9 @@ export default function Header({ user, fetchStatus }) {
     if (statusValue === 200) {
       window.location.href = '/';
     }
+  };
+  const searchForQuery = () => {
+    navigate(`/search?query=${searchBox}`);
   };
   return (
     <>
@@ -32,7 +36,7 @@ export default function Header({ user, fetchStatus }) {
                 value={searchBox}
                 onChange={(e) => setSearchBox(e.target.value)}
               />
-              <AiOutlineSearch size="2rem" style={{ fill: 'white' }} />
+              <AiOutlineSearch size="2rem" style={{ fill: 'white', cursor: 'pointer' }} type="button" onClick={searchForQuery} />
             </div>
             <div className="navbar-menu">
               {fetchStatus === 200

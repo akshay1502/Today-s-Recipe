@@ -19,7 +19,7 @@ export default function Login({ user }) {
     if (user) {
       window.location.href = '/';
     }
-  }, []);
+  }, [user]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
