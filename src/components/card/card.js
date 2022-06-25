@@ -6,9 +6,11 @@ export default function Card({ recipe, self }) {
   const date = new Date(recipe.date).toDateString().split(' ').slice(1);
   const uploadDate = `${date[1]} ${date[0]} ${date[2]}`;
   return (
-    <Link to={`/recipes/${recipe._id}`} className="linkComponent" key={recipe._id}>
+    <Link to={`/recipes/${recipe._id}`} className="link" key={recipe._id}>
       <div key={recipe.id} className="card">
-        <img src={recipe.image} alt="food dish" />
+        <div className="imageContainer">
+          <img src={recipe.image} alt="food dish" />
+        </div>
         <div className="description">
           <h4>{recipe.title.blocks[0].data.text}</h4>
           <div className="descriptionFooter">
@@ -20,7 +22,7 @@ export default function Card({ recipe, self }) {
                   recipe.authorProfileImage
                     ? <img src={recipe.authorProfileImage} alt={recipe.authorName} />
                     : (
-                      <div className="authorprofile" style={{ backgroundColor: `#${recipe.authorColorCode}` }}>
+                      <div className="authorProfile" style={{ backgroundColor: `#${recipe.authorColorCode}` }}>
                         {`${recipe.authorName[0]}`}
                       </div>
                     )

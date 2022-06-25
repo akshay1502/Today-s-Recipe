@@ -77,7 +77,7 @@ export default function Login({ user }) {
     }
   };
   return (
-    <div className="form">
+    <div className="form main">
       <img src="/assests/loginBanner.jpg" alt="LoginBannerImage" id="loginBannerImage" />
       <form className="loginForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">

@@ -1,0 +1,67 @@
+* {
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --primary-color: #ECBB5C;
+  --secondary-coloror: #2A222D;
+  --follow-btn: #FF6E69;
+  --like-btn: #1DA1F2;
+  --bookmark-btn: #1DB954;
+  --comments-btn: #AAB8C2;
+
+  --text-primary: #272727;
+  --text-secondary: #5C5959;
+  --notification: #BC0402;
+  
+  --light-font: 300;
+  --regular-font: 400;
+  --medium-font: 500;
+  --semi-bold-font: 600;
+  --bold-font: 700;
+}
+
+.main {
+  padding: 40px 64px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(455px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
+  grid-column-gap: 40px;
+  justify-items: center;
+}
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-coloror);
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+@mixin btn-small {
+  font-size: 16px;
+  padding: 8px 16px;
+  font-weight: var(--semi-bold-font);
+}
+@mixin btn-large {
+  font-size: 24px;
+  padding: 16px 32px;
+  font-weight: var(--bold-font);
+}
+.btn:focus, .btn-primary:focus, .show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: none !important;
+}

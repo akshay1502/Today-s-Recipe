@@ -1,5 +1,5 @@
 /* eslint-disable no-constant-condition */
-import './App.css';
+import './App.scss';
 import {
   Routes, Route,
 } from 'react-router-dom';

@@ -39,7 +39,7 @@ export default function Profile() {
   };
   const style = `
     text-decoration: underline;
-    text-decoration-color: var(--logo-color);
+    text-decoration-color: var(--primary-color);
     text-decoration-thickness: 4px;
     text-underline-offset: 8px;
   `;
@@ -59,13 +59,13 @@ export default function Profile() {
       {
         user
         && (
-        <div className="profile">
+        <div className="profile main">
           <div className="self">
             {
               user.profileImage
                 ? <img src={user.profileImage} alt={user.firstName} />
                 : (
-                  <div className="authorprofile" style={{ backgroundColor: `#${user.colorCode}` }}>
+                  <div className="authorProfile" style={{ backgroundColor: `#${user.colorCode}` }}>
                     {`${user.firstName[0]}`}
                   </div>
                 )
@@ -97,7 +97,7 @@ export default function Profile() {
                 style={{
                   textDecoration: 'underline',
                   textDecorationThickness: '4px',
-                  textDecorationColor: 'var(--logo-color)',
+                  textDecorationColor: 'var(--primary-color)',
                   textUnderlineOffset: '8px',
                 }}
                 onClick={(e) => { showRecipes(); showUnderline(e); }}

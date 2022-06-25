@@ -1,12 +1,14 @@
+@import '../../App.scss';
+
 .navbar {
-  background-color: var(--navbar-bg-color);
+  background-color: var(--secondary-coloror);
   height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding:0px 64px;
   & .navbar-brand {
-    color: var(--logo-color);
+    color: var(--primary-color);
     font-size: 40px;
     font-weight: var(--semi-bold-font);
     cursor: pointer;
@@ -25,24 +27,17 @@
     font-size: 24px;
     display: flex;
     & .addRecipe {
-      background: var(--logo-color);
-      border: none;
-      outline: none;
-      border-radius: 8px;
+      @include btn;
+      @include btn-small;
       margin-right: 4rem;
-      font-size: 18px;
-      font-weight: 500;
-      padding: 0 8px;
       > a {
-        text-decoration: none;
-        color: var(--navbar-bg-color);
+        color: var(--secondary-coloror);
       }
     }
     & .login {
       margin-right: 32px;
       & > a {
         margin-right:5px;
-        text-decoration: none;
         color: white;
       }
     }
@@ -53,7 +48,7 @@
         position: relative;
         & .subMenu {
           display: inline-block;
-          border: 1px solid var(--navbar-bg-color);
+          border: 1px solid var(--secondary-coloror);
           min-width: 8rem;
           border-radius: 4px;
           padding: 8px 0;
@@ -73,10 +68,8 @@
         }
       }
     }
-    & .authorprofile { 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    & .authorProfile { 
+      @include flexCenter;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -87,7 +80,4 @@
       fill: white;
     }
   }
-}
-a {
-  text-decoration: none !important;
 }

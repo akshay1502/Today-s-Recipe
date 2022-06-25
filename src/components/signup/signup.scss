@@ -1,5 +1,4 @@
 .form {
-  padding: 40px 64px;
   display: flex;
   min-height: 100vh;
   justify-content: center;
@@ -34,7 +33,7 @@
     font-weight: 500;
   }
   & .signupForm {
-    background-color: var(--logo-color);
+    background-color: var(--primary-color);
     width: 50%;
     padding: 32px 80px;
     display: flex;
@@ -46,8 +45,8 @@
     }
     & #signupBtn {
       width: 100%;
-      background-color: var(--navbar-bg-color);
-      color: var(--logo-color);
+      background-color: var(--secondary-coloror);
+      color: var(--primary-color);
       border: none;
       cursor: pointer;
       font-weight: bold;

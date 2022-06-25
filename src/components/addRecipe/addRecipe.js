@@ -117,7 +117,7 @@ export default function AddRecipe() {
   };
 
   return (
-    <div className="cook">
+    <div className="cook main">
       <div id="recipeTitle" />
       {
         previewSource

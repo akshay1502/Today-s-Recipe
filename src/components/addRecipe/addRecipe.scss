@@ -1,5 +1,6 @@
+@import '../../App.scss';
+
 .cook {
-  padding: 40px 64px;
   
   #recipeTitle {
     font-size: 24px;
@@ -37,9 +38,7 @@
     width: 60%;
     height: 500px;
     margin: 32px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexCenter;
     
     & button:first-child {
       background-color: #5C5959;
@@ -76,16 +75,9 @@
   }
 
   #postRecipe {
-    font-size: 1.5rem;
-    font-weight: var(--semi-bold-font);
-    background-color: var(--logo-color);
-    color: var(--navbar-bg-color);
-    border-radius: 8px;
-    padding: 12px 24px;
-    outline: none;
-    border: none;
+    @include btn;
+    @include btn-large;
     margin: 2rem 0;
-    cursor: pointer;
   }
 }
 

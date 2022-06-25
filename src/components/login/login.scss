@@ -1,5 +1,4 @@
 .form {
-  padding: 40px 64px;
   display: flex;
   min-height: 100vh;
   justify-content: center;
@@ -8,7 +7,7 @@
     height: calc(100vh - 80px);
   }
   & .loginForm {
-    background-color: var(--logo-color);
+    background-color: var(--primary-color);
     width: 40%;
     padding: 32px 80px;
     display: flex;
@@ -16,8 +15,8 @@
     justify-content: space-evenly;
     & #loginBtn {
       width: 100%;
-      background-color: var(--navbar-bg-color);
-      color: var(--logo-color);
+      background-color: var(--secondary-coloror);
+      color: var(--primary-color);
       border: none;
       cursor: pointer;
       font-weight: bold;

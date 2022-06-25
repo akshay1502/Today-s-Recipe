@@ -1,20 +1,21 @@
-.linkComponent {
-  text-decoration: none;
-  color: black;
-}
+@import '../../App.scss';
 
 .card {
   margin-bottom: 32px;
   cursor: pointer;
   border-radius: 4px;
-  width: 550px;
+  min-width: 455px;
+  max-width: 500px;
   &:hover {
     box-shadow: 1px 1px 4px lightslategrey;
   }
-  > img{
-    width: 100%;
-    height: 350px;
-    border-radius: 4px 4px 0 0;
+  & .imageContainer {
+    > img{
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      aspect-ratio: 10 / 7;
+      object-fit: cover;
+    }
   }
 }
 
@@ -25,7 +26,7 @@
     overflow: hidden;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    font-weight: 600;
+    font-weight: var(--semi-bold-font);
   }
 
   & .descriptionFooter {
@@ -42,10 +43,8 @@
       & p:last-child {
         font-weight: 300;
       }
-      & .authorprofile { 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      & .authorProfile { 
+        @include flexCenter;
         border-radius: 50%;
       }
     }

@@ -26,8 +26,8 @@ export default function Header({ user, fetchStatus }) {
       { pathname === '/signup' || pathname === '/login'
         ? null
         : (
-          <nav className="navbar local-bootstrap">
-            <Link to="/" className="navbar-brand">Today&apos;s Recipe</Link>
+          <nav className="navbar">
+            <Link to="/" className="link navbar-brand">Today&apos;s Recipe</Link>
             <div className="navbar-input">
               <input
                 type="text"
@@ -43,13 +43,13 @@ export default function Header({ user, fetchStatus }) {
                 ? (
                   <>
                     <button type="button" className="addRecipe">
-                      <Link to="/addRecipe">Add recipe</Link>
+                      <Link to="/addRecipe" className="link">Add recipe</Link>
                     </button>
                     <div className="user">
                       {user.profileImage
                         ? <img src={user.profileImage} alt={user.firstName} />
                         : (
-                          <div className="authorprofile" style={{ backgroundColor: `#${user.colorCode}` }}>
+                          <div className="authorProfile" style={{ backgroundColor: `#${user.colorCode}` }}>
                             {`${user.firstName[0]}`}
                           </div>
                         )}
@@ -68,7 +68,7 @@ export default function Header({ user, fetchStatus }) {
                 )
                 : (
                   <div className="login">
-                    <Link to="/login" style={{ textDecoration: 'none', color: 'var(--navbar-text-color)' }}>Login </Link>
+                    <Link to="/login" className="link" style={{ color: 'white' }}>Login </Link>
                   </div>
                 )}
             </div>

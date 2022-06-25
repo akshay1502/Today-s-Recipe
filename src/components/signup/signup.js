@@ -97,7 +97,7 @@ export default function Signup({ user }) {
     }
   };
   return (
-    <div className="form">
+    <div className="form main">
       <img src="/assests/signupBanner.png" alt="SignupBannerImage" id="signupBannerImage" />
       <form className="signupForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">

@@ -16,7 +16,7 @@ export default function Home() {
     setRecipes(allRecipes);
   }, []);
   return (
-    <div className="grid">
+    <div className="grid main">
       {
         recipes && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
       }

@@ -32,7 +32,7 @@ export default function Recipes({ user }) {
   }, []);
 
   return (
-    <div className="recipe">
+    <div className="recipe main">
       { recipeData && user && (
         <>
           <h1 id="title">{recipeData.title.blocks[0].data.text}</h1>
@@ -41,12 +41,12 @@ export default function Recipes({ user }) {
               recipeData.authorProfileImage
                 ? <img src={recipeData.authorProfileImage} alt={recipeData.authorName} />
                 : (
-                  <div className="authorprofile" style={{ backgroundColor: `#${recipeData.authorColorCode}` }}>
+                  <div className="authorProfile" style={{ backgroundColor: `#${recipeData.authorColorCode}` }}>
                     {`${recipeData.authorName[0]}`}
                   </div>
                 )
             }
-            <Link className="userLink" to={user._id === recipeData.author ? '/profile' : `/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
+            <Link className="link" to={user._id === recipeData.author ? '/profile' : `/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
             <Follow user={user} author={recipeData.author} authorName={recipeData.authorName} />
           </div>
           <p className="uploadDate">{new Date(recipeData.date).toDateString()}</p>
