@@ -11,7 +11,7 @@ import AddRecipe from './components/addRecipe/addRecipe';
 import Signup from './components/signup/signup';
 import Login from './components/login/login';
 import Recipes from './components/recipes/recipes';
-import Profile from './components/profile/profile';
+import Profile, { ShowProfile, EditProfile } from './components/profile/profile';
 import Temp from './temp';
 import Search from './components/search/search';
 import fetchURL from './helperFunctions/fetch';
@@ -37,8 +37,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="addRecipe" element={<AddRecipe />} />
           <Route path="recipes/:id" element={<Recipes user={user} />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="profile/:id" element={<Profile />} />
+          <Route path="profile" element={<Profile />}>
+            <Route path="edit" element={<EditProfile user={user} />} />
+            <Route path=":id" element={<ShowProfile user={user} />} />
+          </Route>
           <Route path="search" element={<Search />} />
           <Route path="temp" element={<Temp />} />
         </>

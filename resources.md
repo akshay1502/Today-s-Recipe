@@ -9,7 +9,7 @@
 - 800: Extra-bold
 
 ## Colors:
-- --secondary-coloror: #2A222D;
+- --secondary-color: #2A222D;
 - --primary-color: #ECBB5C;
 - --background-color: #FFF6E3;
 - --navbar-text-color: #FBFBFB;

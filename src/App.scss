@@ -7,7 +7,7 @@
 
 :root {
   --primary-color: #ECBB5C;
-  --secondary-coloror: #2A222D;
+  --secondary-color: #2A222D;
   --follow-btn: #FF6E69;
   --like-btn: #1DA1F2;
   --bookmark-btn: #1DB954;
@@ -44,9 +44,9 @@
   justify-content: center;
   align-items: center;
 }
-@mixin btn {
-  background-color: var(--primary-color);
-  color: var(--secondary-coloror);
+@mixin btn($bgColor: var(--primary-color), $textColor:var(--secondary-color)) {
+  background-color: $bgColor;
+  color: $textColor;
   outline: none;
   border: none;
   border-radius: 8px;

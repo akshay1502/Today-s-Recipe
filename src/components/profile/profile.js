@@ -1,14 +1,24 @@
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 import './profile.scss';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {
+  Link, useParams, Outlet,
+} from 'react-router-dom';
 import fetchURL from '../../helperFunctions/fetch';
 import Card from '../card/card';
 
 export default function Profile() {
-  const { id } = useParams();
-  const [user, setUser] = useState(null);
+  return (<Outlet />);
+}
+
+function ShowProfile({ user }) {
+  let { id } = useParams();
+  if (id === user._id) { id = null; }
+  console.log(id);
+  const [profile, setProfile] = useState(null);
   const [selfRecipes, setSelfRecipes] = useState(null);
   const [bookmarkRecipes, setBookmarkRecipes] = useState(null);
   const [recipes, setRecipes] = useState(null);
@@ -20,14 +30,14 @@ export default function Profile() {
       headers: { 'Content-Type': 'application/json' },
     });
     const result = await res.json();
-    setUser(result);
+    setProfile(result);
     setBookmarkRecipes(result.bookmarkRecipes);
-  }, []);
+  }, [id]);
   useEffect(async () => {
     const { result } = await fetchURL(`recipes/users/${id || 'self'}`, 'GET');
     setRecipes(result);
     setSelfRecipes(result);
-  }, []);
+  }, [id]);
   const showRecipes = () => { setRecipes(selfRecipes); setSelf(true); };
   const showBookmarkRecipes = async () => {
     const fetchBookmarkRecipes = await Promise.all(bookmarkRecipes.map(async (recipeId) => {
@@ -38,11 +48,11 @@ export default function Profile() {
     setSelf(false);
   };
   const style = `
-    text-decoration: underline;
-    text-decoration-color: var(--primary-color);
-    text-decoration-thickness: 4px;
-    text-underline-offset: 8px;
-  `;
+  text-decoration: underline;
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 4px;
+  text-underline-offset: 8px;
+`;
   const showUnderline = (e) => {
     const myRecipes = document.getElementById('myRecipes');
     const bookmarks = document.getElementById('bookmarks');
@@ -56,63 +66,90 @@ export default function Profile() {
   };
   return (
     <>
-      {
-        user
-        && (
-        <div className="profile main">
-          <div className="self">
-            {
-              user.profileImage
-                ? <img src={user.profileImage} alt={user.firstName} />
-                : (
-                  <div className="authorProfile" style={{ backgroundColor: `#${user.colorCode}` }}>
-                    {`${user.firstName[0]}`}
-                  </div>
-                )
-            }
-            <p className="name">
-              {user.firstName}
+      {profile
+      && (
+      <div className="profile main">
+        <div className="self">
+          {
+            profile.profileImage
+              ? <img src={profile.profileImage} alt={profile.firstName} />
+              : (
+                <div className="authorProfile" style={{ backgroundColor: `#${profile.colorCode}` }}>
+                  {`${profile.firstName[0]}`}
+                </div>
+              )
+          }
+          <p className="name">
+            {profile.firstName}
+            {' '}
+            {profile.lastName}
+          </p>
+          <div className="popularity">
+            <p>
+              {profile.follower.length}
               {' '}
-              {user.lastName}
+              Follower
             </p>
-            <div className="popularity">
-              <p>
-                {user.follower.length}
-                {' '}
-                Follower
-              </p>
-              <p>
-                {user.following.length}
-                {' '}
-                Following
-              </p>
-            </div>
-            { !id && <button type="button" id="editProfile">Edit Profile</button>}
+            <p>
+              {profile.following.length}
+              {' '}
+              Following
+            </p>
           </div>
-          <div className="postsData">
-            <div className="navigator">
-              <button
-                type="button"
-                id="myRecipes"
-                style={{
-                  textDecoration: 'underline',
-                  textDecorationThickness: '4px',
-                  textDecorationColor: 'var(--primary-color)',
-                  textUnderlineOffset: '8px',
-                }}
-                onClick={(e) => { showRecipes(); showUnderline(e); }}
-              >
-                My recipes
-              </button>
-              <button type="button" id="bookmarks" onClick={(e) => { showBookmarkRecipes(); showUnderline(e); }}>Bookmarks</button>
-            </div>
-            { recipes && recipes.length
-              ? recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} self={self} />)
-              : <h1>0</h1>}
-          </div>
+          <EditOrFollow user={user} id={id} />
         </div>
-        )
+        <div className="postsData">
+          <div className="navigator">
+            <button
+              type="button"
+              id="myRecipes"
+              style={{
+                textDecoration: 'underline',
+                textDecorationThickness: '4px',
+                textDecorationColor: 'var(--primary-color)',
+                textUnderlineOffset: '8px',
+              }}
+              onClick={(e) => { showRecipes(); showUnderline(e); }}
+            >
+              My recipes
+            </button>
+            <button type="button" id="bookmarks" onClick={(e) => { showBookmarkRecipes(); showUnderline(e); }}>Bookmarks</button>
+          </div>
+          { recipes && recipes.length
+            ? recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} self={self} />)
+            : <h1>0</h1>}
+        </div>
+      </div>
+      )}
+    </>
+  );
+}
+function EditOrFollow({ user, id }) {
+  const [follow, setFollow] = useState(user.following.includes(id));
+  const followOrUnfollow = async (followStatus) => {
+    const { statusValue } = await fetchURL(`users/${id}/follow`, 'PATCH', { follow: followStatus });
+    if (statusValue === 200) {
+      setFollow(!follow);
+    }
+  };
+  return (
+    <>
+      {
+        id
+          ? (
+            follow
+              ? <button type="button" id="unfollowBtn" onClick={() => followOrUnfollow(0)}>Unfollow</button>
+              : <button type="button" id="followBtn" onClick={() => followOrUnfollow(1)}>Follow</button>
+          )
+          : <Link to="/edit" type="button" id="editProfile" className="link">Edit Profile</Link>
       }
     </>
   );
 }
+
+function EditProfile() {
+  return (
+    <div>Inside of edit section</div>
+  );
+}
+export { ShowProfile, EditProfile };

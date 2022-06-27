@@ -1,7 +1,7 @@
 @import '../../App.scss';
 
 .navbar {
-  background-color: var(--secondary-coloror);
+  background-color: var(--secondary-color);
   height: 80px;
   display: flex;
   justify-content: space-between;
@@ -31,7 +31,7 @@
       @include btn-small;
       margin-right: 4rem;
       > a {
-        color: var(--secondary-coloror);
+        color: var(--secondary-color);
       }
     }
     & .login {
@@ -48,7 +48,7 @@
         position: relative;
         & .subMenu {
           display: inline-block;
-          border: 1px solid var(--secondary-coloror);
+          border: 1px solid var(--secondary-color);
           min-width: 8rem;
           border-radius: 4px;
           padding: 8px 0;
@@ -58,6 +58,7 @@
           top: 2rem;
           background-color: white;
           & a, li {
+            text-decoration: none;
             display: block;
             color: black;
             padding: 8px 16px;

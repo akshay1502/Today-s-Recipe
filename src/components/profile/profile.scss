@@ -26,9 +26,13 @@
         margin-bottom: 8px;   
       }
     }
-    & #editProfile {
+    & #editProfile, #followBtn, #unfollowBtn {
       @include btn;
       @include btn-small;
+    }
+    & #unfollowBtn {
+      border: 2px solid var(--primary-color);
+      background: none;
     }
   }
   & .postsData {

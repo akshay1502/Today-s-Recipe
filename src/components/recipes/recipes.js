@@ -29,7 +29,7 @@ export default function Recipes({ user }) {
     setRecipeData(getRecipeData);
     setRecipe(parseRecipe);
     setIngredients(parseIngredients);
-  }, []);
+  }, [id]);
 
   return (
     <div className="recipe main">
@@ -67,8 +67,8 @@ export default function Recipes({ user }) {
 function Follow({ user, author, authorName }) {
   const { _id, following } = user;
   const followUser = async (userId) => {
-    const { statusstaValue } = await fetchURL(`users/${userId}/follow`, 'PATCH', { follow: 1 });
-    if (statusstaValue === 200) {
+    const { statusValue } = await fetchURL(`users/${userId}/follow`, 'PATCH', { follow: 1 });
+    if (statusValue === 200) {
       document.getElementById('follow').style.display = 'none';
       toastMsg('info', `You are following ${authorName}`);
     }
