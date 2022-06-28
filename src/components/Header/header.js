@@ -48,9 +48,9 @@ export default function Header({ user, fetchStatus }) {
                     </button>
                     <div className="user">
                       {user.profileImage
-                        ? <img src={user.profileImage} alt={user.firstName} />
+                        ? <img src={user.profileImage} alt={user.firstName} className="userProfileImage" />
                         : (
-                          <div className="authorProfile" style={{ backgroundColor: `#${user.colorCode}` }}>
+                          <div className="userProfileImage" style={{ backgroundColor: `#${user.colorCode}` }}>
                             {`${user.firstName[0]}`}
                           </div>
                         )}
@@ -58,7 +58,7 @@ export default function Header({ user, fetchStatus }) {
                       { open && (
                       <div id="subMenuHolder">
                         <ul className="subMenu">
-                          <Link to="/profile" onClick={() => setOpen(!open)}>Profile</Link>
+                          <Link to={`/profile/${user._id}`} onClick={() => setOpen(!open)}>Profile</Link>
                           <Link to="/">Notifications</Link>
                           <li onClick={logout}>Logout</li>
                         </ul>

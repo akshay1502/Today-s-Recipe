@@ -35,17 +35,15 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      > img, > div {
+      & .userProfileImage { 
+        @include flexCenter;
+        border-radius: 50%;
         margin-right: 10px;
         width: 34px;
         height: 34px;
       }
       & p:last-child {
         font-weight: 300;
-      }
-      & .authorProfile { 
-        @include flexCenter;
-        border-radius: 50%;
       }
     }
   }

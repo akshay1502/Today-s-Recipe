@@ -1,155 +1,157 @@
-/* eslint-disable max-len */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-underscore-dangle */
+import { useState } from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import { BiImageAdd } from 'react-icons/bi';
 import './profile.scss';
-import { useState, useEffect } from 'react';
-import {
-  Link, useParams, Outlet,
-} from 'react-router-dom';
 import fetchURL from '../../helperFunctions/fetch';
-import Card from '../card/card';
 
 export default function Profile() {
   return (<Outlet />);
 }
 
-function ShowProfile({ user }) {
-  let { id } = useParams();
-  if (id === user._id) { id = null; }
-  console.log(id);
-  const [profile, setProfile] = useState(null);
-  const [selfRecipes, setSelfRecipes] = useState(null);
-  const [bookmarkRecipes, setBookmarkRecipes] = useState(null);
-  const [recipes, setRecipes] = useState(null);
-  const [self, setSelf] = useState(true);
-  useEffect(async () => {
-    const res = await fetch(`http://localhost:5000/users/${id || 'self'}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
+function EditProfile({ user }) {
+  const { firstName, lastName, email } = user;
+  const [previewSource, setPreviewSource] = useState(user.profileImage);
+  const [formValues, setFormValues] = useState({
+    editFirstName: firstName,
+    editLastName: lastName,
+    editEmail: email,
+  });
+  const [formErrors, setFormErrors] = useState({
+    editFirstName: '',
+    editLastName: '',
+    editEmail: '',
+  });
+  const handleProfileImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
     });
-    const result = await res.json();
-    setProfile(result);
-    setBookmarkRecipes(result.bookmarkRecipes);
-  }, [id]);
-  useEffect(async () => {
-    const { result } = await fetchURL(`recipes/users/${id || 'self'}`, 'GET');
-    setRecipes(result);
-    setSelfRecipes(result);
-  }, [id]);
-  const showRecipes = () => { setRecipes(selfRecipes); setSelf(true); };
-  const showBookmarkRecipes = async () => {
-    const fetchBookmarkRecipes = await Promise.all(bookmarkRecipes.map(async (recipeId) => {
-      const { result: recipeData } = await fetchURL(`recipes/${recipeId}`, 'GET');
-      return recipeData;
-    }));
-    setRecipes(fetchBookmarkRecipes);
-    setSelf(false);
-  };
-  const style = `
-  text-decoration: underline;
-  text-decoration-color: var(--primary-color);
-  text-decoration-thickness: 4px;
-  text-underline-offset: 8px;
-`;
-  const showUnderline = (e) => {
-    const myRecipes = document.getElementById('myRecipes');
-    const bookmarks = document.getElementById('bookmarks');
-    if (e.target.id === 'myRecipes') {
-      myRecipes.style.cssText = style;
-      bookmarks.style.cssText = '';
-    } else {
-      myRecipes.style.cssText = '';
-      bookmarks.style.cssText = style;
-    }
-  };
-  return (
-    <>
-      {profile
-      && (
-      <div className="profile main">
-        <div className="self">
-          {
-            profile.profileImage
-              ? <img src={profile.profileImage} alt={profile.firstName} />
-              : (
-                <div className="authorProfile" style={{ backgroundColor: `#${profile.colorCode}` }}>
-                  {`${profile.firstName[0]}`}
-                </div>
-              )
-          }
-          <p className="name">
-            {profile.firstName}
-            {' '}
-            {profile.lastName}
-          </p>
-          <div className="popularity">
-            <p>
-              {profile.follower.length}
-              {' '}
-              Follower
-            </p>
-            <p>
-              {profile.following.length}
-              {' '}
-              Following
-            </p>
-          </div>
-          <EditOrFollow user={user} id={id} />
-        </div>
-        <div className="postsData">
-          <div className="navigator">
-            <button
-              type="button"
-              id="myRecipes"
-              style={{
-                textDecoration: 'underline',
-                textDecorationThickness: '4px',
-                textDecorationColor: 'var(--primary-color)',
-                textUnderlineOffset: '8px',
-              }}
-              onClick={(e) => { showRecipes(); showUnderline(e); }}
-            >
-              My recipes
-            </button>
-            <button type="button" id="bookmarks" onClick={(e) => { showBookmarkRecipes(); showUnderline(e); }}>Bookmarks</button>
-          </div>
-          { recipes && recipes.length
-            ? recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} self={self} />)
-            : <h1>0</h1>}
-        </div>
-      </div>
-      )}
-    </>
-  );
-}
-function EditOrFollow({ user, id }) {
-  const [follow, setFollow] = useState(user.following.includes(id));
-  const followOrUnfollow = async (followStatus) => {
-    const { statusValue } = await fetchURL(`users/${id}/follow`, 'PATCH', { follow: followStatus });
-    if (statusValue === 200) {
-      setFollow(!follow);
-    }
-  };
-  return (
-    <>
-      {
-        id
-          ? (
-            follow
-              ? <button type="button" id="unfollowBtn" onClick={() => followOrUnfollow(0)}>Unfollow</button>
-              : <button type="button" id="followBtn" onClick={() => followOrUnfollow(1)}>Follow</button>
-          )
-          : <Link to="/edit" type="button" id="editProfile" className="link">Edit Profile</Link>
+    switch (name) {
+      case 'editFirstName': {
+        const result = /^[a-zA-Z]+$/g.test(value);
+        const errorMsg = result ? '' : 'First name should contain only alphabets.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
       }
-    </>
-  );
-}
-
-function EditProfile() {
+      case 'editLastName': {
+        const result = /^[a-zA-Z]+$/g.test(value);
+        const errorMsg = result ? '' : 'Last name should contain only alphabets.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
+      case 'editEmail': {
+        const result = /^\S+@\S+\.\S+$/.test(value);
+        const errorMsg = result ? '' : 'Enter a valid email address.';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
+      default:
+        break;
+    }
+  };
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    const {
+      editFirstName, editLastName, editEmail,
+    } = formValues;
+    const valueRequiredError = {};
+    if (!editFirstName.length) { valueRequiredError.firstName = 'First name is required'; }
+    if (!editLastName.length) { valueRequiredError.lastName = 'Last name is required'; }
+    if (!editEmail.length) { valueRequiredError.email = 'Email is required'; }
+    if (formErrors.editFirstName === '' && formErrors.editLastName === '' && formErrors.editEmail === '') {
+      const { result } = await fetchURL('users/self/update', 'PATCH', {
+        firstName: editFirstName,
+        lastName: editLastName,
+        email: editEmail,
+        profileImage: previewSource,
+      });
+      if (result.id) {
+        setFormValues({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+        });
+        window.location.href = `/profile/${user._id}`;
+      }
+    } else {
+      setFormErrors({ ...formErrors, ...valueRequiredError });
+    }
+  };
   return (
-    <div>Inside of edit section</div>
+    <form className="editProfile main" onSubmit={handleEditSubmit} method="POST">
+      <div style={{ position: 'relative' }}>
+        {
+          previewSource
+            ? <img src={previewSource} alt={user.firstName} className="profileImage" />
+            : (
+              <div className="userProfileImage" style={{ backgroundColor: `#${user.colorCode}` }}>
+                {`${user.firstName[0]}`}
+              </div>
+            )
+        }
+        <input
+          type="file"
+          accept=".jpg, .jpeg, .png"
+          name="image"
+          onChange={handleProfileImage}
+          style={{ display: 'none' }}
+          id="inputImage"
+        />
+        <BiImageAdd size="2rem" className="addImage" onClick={() => document.getElementById('inputImage').click()} />
+      </div>
+      <div>
+        <label htmlFor="editFirstName">First Name</label>
+        <br />
+        <input
+          name="editFirstName"
+          id="editFirstName"
+          type="text"
+          value={formValues.editFirstName}
+          onChange={handleEditInputChange}
+        />
+        <small>{formErrors.editFirstName}</small>
+      </div>
+      <div>
+        <label htmlFor="editLastName">Last Name</label>
+        <br />
+        <input
+          name="editLastName"
+          id="editLastName"
+          type="text"
+          value={formValues.editLastName}
+          onChange={handleEditInputChange}
+        />
+        <small>{formErrors.editLastName}</small>
+      </div>
+      <div>
+        <label htmlFor="editEmail">Email</label>
+        <br />
+        <input
+          name="editEmail"
+          id="editEmail"
+          type="email"
+          value={formValues.editEmail}
+          onChange={handleEditInputChange}
+        />
+        <small>{formErrors.editEmail}</small>
+      </div>
+      <div>
+        <input type="submit" value="Save" id="save" />
+        <Link to={`/profile/${user._id}`} type="button" style={{ textDecoration: 'none' }} id="cancel">Cancel</Link>
+      </div>
+    </form>
   );
 }
-export { ShowProfile, EditProfile };
+export { EditProfile };

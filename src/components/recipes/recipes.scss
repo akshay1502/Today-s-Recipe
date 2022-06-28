@@ -8,11 +8,9 @@
     display: flex;
     align-items: center;
     margin-top: 8px;
-    & .authorProfile { 
+    & .userProfileImage { 
       @include flexCenter;
       border-radius: 50%;
-    }
-    & > img, .authorProfile {
       height: 32px;
       width: 32px;
       margin-right: 8px;

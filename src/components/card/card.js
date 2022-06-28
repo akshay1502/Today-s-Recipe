@@ -20,9 +20,9 @@ export default function Card({ recipe, self }) {
                 <>
                   {
                   recipe.authorProfileImage
-                    ? <img src={recipe.authorProfileImage} alt={recipe.authorName} />
+                    ? <img src={recipe.authorProfileImage} alt={recipe.authorName} className="userProfileImage" />
                     : (
-                      <div className="authorProfile" style={{ backgroundColor: `#${recipe.authorColorCode}` }}>
+                      <div className="userProfileImage" style={{ backgroundColor: `#${recipe.authorColorCode}` }}>
                         {`${recipe.authorName[0]}`}
                       </div>
                     )

@@ -1,57 +1,52 @@
 @import '../../App.scss';
 
-.profile {
-  display: flex;
-  & .self {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    & .authorProfile {
-      height: 240px;
-      width: 240px;
-      @include flexCenter;
-      border-radius: 50%;
-      font-size: 80px;
-    }
-    & .name {
-      font-size: 24px;
-      font-weight: 500;
-      margin: 1rem 0;
-    }
-    & .popularity {
-      margin-bottom: 2rem;
-      > p:first-child {
-        margin-bottom: 8px;   
-      }
-    }
-    & #editProfile, #followBtn, #unfollowBtn {
-      @include btn;
-      @include btn-small;
-    }
-    & #unfollowBtn {
-      border: 2px solid var(--primary-color);
-      background: none;
-    }
+.editProfile {
+  @include flexCenter;
+  flex-direction: column;
+  & .userProfileImage, & .profileImage {
+    height: 240px;
+    width: 240px;
+    @include flexCenter;
+    border-radius: 50%;
+    font-size: 80px;
   }
-  & .postsData {
-    width: 60%;
-    & .navigator {
-      margin-bottom: 2rem;
-      > button {  border: none;
-        background: none;
-        font-size: 24px;
-        font-weight: 600;
-        margin-right: 2rem;
-        cursor: pointer;
-      }
-    } 
-    .underline {
-      text-decoration: underline;
-      text-decoration-color: var(--primary-color);
-      text-decoration-thickness: 4px;
-      text-underline-offset: 8px;
-    }
+  & .addImage {
+    position: absolute;
+    bottom: 0;
+    right: 48px;
+    cursor: pointer;
+  }
+  & label {
+    font-size: 18px;
+    font-weight: var(--medium-font);
+  }
+  & input {
+    font-size: 16px;
+    padding: 4px 8px;
+    margin-top: 2px;
+    border-radius: 4px;
+    border: 1px solid rgba(128, 128, 128, 80%);
+  }
+  & input:focus {
+    outline: 1.5px solid black;
+  }
+  & #save, & #cancel {
+    @include btn;
+    @include btn-small;
+    border: 2px solid var(--primary-color);
+    margin-right: 40px;
+  }
+  & #cancel {
+    background: none;
+  }
+  > div {
+    margin-bottom: 24px;
+  }
+  & small {
+    display: block;
+    color: var(--notification);
+    line-height: 16px;
+    height: 16px;
+    font-size: 12.5px;
   }
 }

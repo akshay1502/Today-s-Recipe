@@ -39,14 +39,14 @@ export default function Recipes({ user }) {
           <div className="userInfo">
             {
               recipeData.authorProfileImage
-                ? <img src={recipeData.authorProfileImage} alt={recipeData.authorName} />
+                ? <img src={recipeData.authorProfileImage} alt={recipeData.authorName} className="userProfileImage" />
                 : (
-                  <div className="authorProfile" style={{ backgroundColor: `#${recipeData.authorColorCode}` }}>
+                  <div className="userProfileImage" style={{ backgroundColor: `#${recipeData.authorColorCode}` }}>
                     {`${recipeData.authorName[0]}`}
                   </div>
                 )
             }
-            <Link className="link" to={user._id === recipeData.author ? '/profile' : `/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
+            <Link className="link" to={`/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
             <Follow user={user} author={recipeData.author} authorName={recipeData.authorName} />
           </div>
           <p className="uploadDate">{new Date(recipeData.date).toDateString()}</p>
