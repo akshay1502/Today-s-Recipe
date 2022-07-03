@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './login.scss';
@@ -15,6 +16,7 @@ export default function Login({ user }) {
     email: '',
     password: '',
   });
+  const [show, setShow] = useState(false);
   useEffect(() => {
     if (user) {
       window.location.href = '/';
@@ -24,7 +26,7 @@ export default function Login({ user }) {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: value.trim(),
     });
     switch (name) {
       case 'email': {
@@ -60,7 +62,8 @@ export default function Login({ user }) {
           email: '',
           password: '',
         });
-        window.location.href = '/';
+        window.history.replaceState({}, '', '/');
+        window.location.reload();
       } else {
         toast.error(resData.message, {
           position: 'top-right',
@@ -75,6 +78,15 @@ export default function Login({ user }) {
     } else {
       setFormErrors({ ...formErrors, ...valueRequiredError });
     }
+  };
+  const changePasswordType = () => {
+    const password = document.getElementById('password');
+    if (show) {
+      password.type = 'password';
+    } else {
+      password.type = 'text';
+    }
+    setShow(!show);
   };
   return (
     <div className="form main">
@@ -103,13 +115,20 @@ export default function Login({ user }) {
         <div>
           <label htmlFor="password">Password</label>
           <br />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={formValues.password}
-            onChange={handleInputChange}
-          />
+          <div className="password">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={formValues.password}
+              onChange={handleInputChange}
+            />
+            {
+              show
+                ? <AiFillEye size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+                : <AiFillEyeInvisible size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+            }
+          </div>
           <small>{formErrors.password}</small>
         </div>
         <input type="submit" value="Login" id="loginBtn" />

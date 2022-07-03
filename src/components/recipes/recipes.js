@@ -46,7 +46,7 @@ export default function Recipes({ user }) {
                   </div>
                 )
             }
-            <Link className="link" to={`/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
+            <Link className="link userLink" to={`/profile/${recipeData.author}`}>{recipeData.authorName}</Link>
             <Follow user={user} author={recipeData.author} authorName={recipeData.authorName} />
           </div>
           <p className="uploadDate">{new Date(recipeData.date).toDateString()}</p>
@@ -56,8 +56,6 @@ export default function Recipes({ user }) {
           {ingredients && <RenderIngredients ingredients={ingredients} />}
           {recipe && <RenderRecipe recipe={recipe} />}
           <IconsPack recipe={recipeData} user={user} />
-          {/* <textarea id="comment" name="comment" rows="4" cols="40" style={{ padding: '8px' }} />
-          <button type="submit" id="addCmt" onClick={handleCommentInput}>Add Comment</button> */}
         </>
       )}
     </div>

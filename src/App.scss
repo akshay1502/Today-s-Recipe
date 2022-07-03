@@ -38,6 +38,9 @@
   text-decoration: none;
   color: black;
 }
+.userLink:hover {
+  color: #1a0dab;
+}
 
 @mixin flexCenter {
   display: flex;

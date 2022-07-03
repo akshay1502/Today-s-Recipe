@@ -23,5 +23,17 @@
       font-size: 24px;
       padding: 8px;
     }
+    & .password {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      & .hideOrShowpass {
+        position: absolute;
+        right: 16px;
+        bottom: 4px;
+        cursor: pointer;;
+      }
+    }
   }
 }
