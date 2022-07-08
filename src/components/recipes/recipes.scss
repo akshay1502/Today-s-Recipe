@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@import '../../mixin.scss';
 
 .recipe {
   & #title { 
@@ -89,7 +89,10 @@
     margin-top: 16px;
     margin-bottom: 32px;
   }
-  & #likeBtn, #commentBtn, #bookmarkBtn, #shareBtn { cursor: pointer; }
+  & #likeBtn, #commentBtn, #bookmarkBtn, #shareBtn { 
+    cursor: pointer;
+    stroke-width: 1;
+  }
   #recipe, #ingredientList {
     font-size: 18px;
     letter-spacing: 1px;

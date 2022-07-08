@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import toastMsg from '../../helperFunctions/toast';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +22,7 @@ export default function Signup({ user }) {
     email: '',
     password: 'Use 8 or more characters with a mix of alphabets, numbers and special characters.',
   });
+  const [show, setShow] = useState(false);
   useEffect(() => {
     if (user) {
       window.location.href = '/';
@@ -62,7 +64,15 @@ export default function Signup({ user }) {
     }
     return null;
   };
-
+  const changePasswordType = () => {
+    const password = document.getElementById('password');
+    if (show) {
+      password.type = 'password';
+    } else {
+      password.type = 'text';
+    }
+    setShow(!show);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
@@ -97,7 +107,7 @@ export default function Signup({ user }) {
     }
   };
   return (
-    <div className="form main">
+    <div className="form auth">
       <img src="/assests/signupBanner.png" alt="SignupBannerImage" id="signupBannerImage" />
       <form className="signupForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">
@@ -149,14 +159,21 @@ export default function Signup({ user }) {
         <div>
           <label htmlFor="password">Password</label>
           <br />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="eg.user@123"
-            value={formValues.password}
-            onChange={handleInputChange}
-          />
+          <div className="password">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="eg.user@123"
+              value={formValues.password}
+              onChange={handleInputChange}
+            />
+            {
+              show
+                ? <AiFillEye size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+                : <AiFillEyeInvisible size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+            }
+          </div>
           <small style={{ visibility: 'visible' }}>
             { formErrors.password }
           </small>

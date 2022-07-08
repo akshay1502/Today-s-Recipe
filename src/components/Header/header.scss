@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@import '../../mixin.scss';
 
 .navbar {
   background-color: var(--secondary-color);
@@ -44,6 +44,17 @@
     & .user {
       display: flex;
       align-items: center;
+      & .userProfileImage { 
+        @include flexCenter;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+      }
+      & .triangle {
+        cursor: pointer;
+        margin-left: 8px;
+        fill: white;
+      }
       & #subMenuHolder {
         position: relative;
         & .subMenu {
@@ -69,16 +80,25 @@
         }
       }
     }
-    & .userProfileImage { 
-      @include flexCenter;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .navbar {
+    height: 60px;
+    padding: 0px 20px;
+    & .navbar-brand { font-size: 24px; }
+    & .navbar-input { display: none; }
+    & .navbar-menu {
+      & .addRecipe { display: none; }
     }
-    & .triangle {
-      cursor: pointer;
-      margin-left: 8px;
-      fill: white;
+    & .user {
+      & .userProfileImage {
+        width: 36px;  //width & height not working
+        height: 36px;
+        cursor: pointer;
+      }
+      & .triangle { display: none;}
     }
   }
 }

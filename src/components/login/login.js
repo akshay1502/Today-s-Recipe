@@ -89,7 +89,7 @@ export default function Login({ user }) {
     setShow(!show);
   };
   return (
-    <div className="form main">
+    <div className="form auth">
       <img src="/assests/loginBanner.jpg" alt="LoginBannerImage" id="loginBannerImage" />
       <form className="loginForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">

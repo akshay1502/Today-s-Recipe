@@ -1,3 +1,6 @@
+.auth {
+  padding: 40px 64px;
+}
 .form {
   display: flex;
   min-height: 100vh;
@@ -53,6 +56,18 @@
       font-size: 24px;
       padding: 8px;
     }
+    & .password {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      & .hideOrShowpass {
+        position: absolute;
+        right: 16px;
+        bottom: 4px;
+        cursor: pointer;
+      }
+    }
   }
   & small {
     display: block;
@@ -60,5 +75,25 @@
     line-height: 16px;
     color: var(--notification);
     height: 16px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .form {
+    > #signupBannerImage { display: none; }
+    & .signupForm {
+      width: 100%;
+      padding: 0 20px;
+      justify-content: center;
+      > div { margin-bottom: 20px; }
+      > div:first-child, > div:last-of-type { margin-bottom: 40px; }
+      & .fullName {
+        display: block;
+        & div:first-child { 
+          margin-bottom: 20px;
+          margin-right: 0; 
+        }
+      }
+    }
   }
 }

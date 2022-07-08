@@ -25,15 +25,31 @@
 }
 
 .main {
-  padding: 40px 64px;
+  @media only screen and (min-width: 1080px) {
+    padding: 40px 64px;
+  }
+  @media only screen and (min-width: 600px) {
+    padding: 40px 40px;
+  }
+  @media only screen and (max-width: 450px) {
+    padding: 20px 20px;
+  }
 }
-
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(455px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
+  @media only screen and (min-width: 1080px) {
+    grid-template-columns: repeat(auto-fill, minmax(455px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
+  }
+  @media only screen and (min-width: 600px) {
+    grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
+  }
+  @media only screen and (max-width: 450px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
+  }
   grid-column-gap: 40px;
   justify-items: center;
-}
+} 
+
 .link {
   text-decoration: none;
   color: black;
@@ -42,29 +58,6 @@
   color: #1a0dab;
 }
 
-@mixin flexCenter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-@mixin btn($bgColor: var(--primary-color), $textColor:var(--secondary-color)) {
-  background-color: $bgColor;
-  color: $textColor;
-  outline: none;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-@mixin btn-small {
-  font-size: 16px;
-  padding: 8px 16px;
-  font-weight: var(--semi-bold-font);
-}
-@mixin btn-large {
-  font-size: 24px;
-  padding: 16px 32px;
-  font-weight: var(--bold-font);
-}
 .btn:focus, .btn-primary:focus, .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: none !important;
 }

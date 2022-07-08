@@ -1,11 +1,21 @@
-@import '../../App.scss';
+@import '../../mixin.scss';
 
 .card {
   margin-bottom: 32px;
   cursor: pointer;
   border-radius: 4px;
-  min-width: 455px;
-  max-width: 500px;
+  @media only screen and (min-width: 1080px) {
+    min-width: 455px;
+    max-width: 500px;
+  }
+  @media only screen and (min-width: 600px) and (max-width: 1078px) {
+    min-width: 440px;
+    max-width: 500px;
+  }
+  @media only screen and (max-width: 450px) {
+    min-width: 280px;
+    max-width: 450px;
+  }
   &:hover {
     box-shadow: 1px 1px 4px lightslategrey;
   }
@@ -41,6 +51,15 @@
         margin-right: 10px;
         width: 34px;
         height: 34px;
+        @media screen and (max-width: 450px) {
+          width: 24px;
+          height: 24px;
+        }
+      }
+      & p {
+        @media screen and (max-width: 450px) {
+          font-size: 14px;
+        }
       }
       & p:last-child {
         font-weight: 300;
