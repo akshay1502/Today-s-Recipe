@@ -82,7 +82,7 @@ export default function IconsPack({ recipe, user }) {
         </div>
         <div className="comments">
           <FiMessageCircle size="2rem" strokeWidth="1.5" id="commentBtn" onClick={() => { commentOnRecipe(); }} style={{ marginRight: '12px' }} />
-          {comments.length}
+          {comments.length || 0}
         </div>
         <div><FiBookmark size="2rem" strokeWidth="1.5" id="bookmarkBtn" onClick={addToBookmark} /></div>
         <div><FiShare2 size="2rem" strokeWidth="1.5" id="shareBtn" /></div>
@@ -93,17 +93,21 @@ export default function IconsPack({ recipe, user }) {
           <textarea id="comment" name="comment" rows="3" cols="40" style={{ padding: '8px' }} />
           <button type="submit" id="addCmt" onClick={handleCommentInput}>Add Comment</button>
         </div>
-        <h2 style={{ fontWeight: 'var(--semi-bold-font)' }}>Comments</h2>
-        <hr />
-        {
-          comments.map((comment) => (
-            <RenderComment
-              key={comment._id}
-              comment={comment}
-              self={userId}
-            />
-          ))
-        }
+        { Boolean(comments.length) && (
+        <>
+          <h2 style={{ fontWeight: 'var(--semi-bold-font)' }}>Comments</h2>
+          <hr />
+          {
+            comments.map((comment) => (
+              <RenderComment
+                key={comment._id}
+                comment={comment}
+                self={userId}
+              />
+            ))
+          }
+        </>
+        )}
       </>
       )}
     </>

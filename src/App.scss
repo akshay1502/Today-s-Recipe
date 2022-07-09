@@ -23,12 +23,15 @@
   --semi-bold-font: 600;
   --bold-font: 700;
 }
+$dekstop: 1080px;
+$tablet: 600px;
+$mobile: 450px;
 
 .main {
   @media only screen and (min-width: 1080px) {
     padding: 40px 64px;
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) and (max-width: 1078px) {
     padding: 40px 40px;
   }
   @media only screen and (max-width: 450px) {
@@ -40,7 +43,7 @@
   @media only screen and (min-width: 1080px) {
     grid-template-columns: repeat(auto-fill, minmax(455px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) and (max-width: 1078px) {
     grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); //change from 350-400 to 5-600 for mobile compatibility
   }
   @media only screen and (max-width: 450px) {

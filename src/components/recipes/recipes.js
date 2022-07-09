@@ -29,6 +29,7 @@ export default function Recipes({ user }) {
     setRecipeData(getRecipeData);
     setRecipe(parseRecipe);
     setIngredients(parseIngredients);
+    console.log(parseRecipe);
   }, [id]);
 
   return (
