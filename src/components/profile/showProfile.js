@@ -74,24 +74,26 @@ export default function ShowProfile({ user }) {
                 </div>
               )
           }
-          <p className="name">
-            {profile.firstName}
-            {' '}
-            {profile.lastName}
-          </p>
-          <div className="popularity">
-            <p>
-              {profile.follower.length}
+          <div className="selfData">
+            <h2>
+              {profile.firstName}
               {' '}
-              Follower
-            </p>
-            <p>
-              {profile.following.length}
-              {' '}
-              Following
-            </p>
+              {profile.lastName}
+            </h2>
+            <div className="popularity">
+              <Link to="/" className="link userLink">
+                {profile.follower.length}
+                {' '}
+                Follower
+              </Link>
+              <Link to="/" className="link userLink">
+                {profile.following.length}
+                {' '}
+                Following
+              </Link>
+            </div>
+            <EditOrFollow user={user} id={id} />
           </div>
-          <EditOrFollow user={user} id={id} />
         </div>
         <div className="postsData">
           <div className="navigator">

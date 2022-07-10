@@ -15,9 +15,12 @@
   font-size: 16px;
   padding: 8px 16px;
   font-weight: var(--semi-bold-font);
+  @media screen and (max-width: 450px) {
+    font-size: 14px;
+  }
 }
 @mixin btn-large {
-  font-size: 24px;
-  padding: 16px 32px;
+  font-size: 20px;
+  padding: 12px 24px;
   font-weight: var(--bold-font);
 }

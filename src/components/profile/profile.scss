@@ -26,11 +26,15 @@
     margin-top: 2px;
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 80%);
+    @media screen and (max-width: 450px) {
+      width: calc( 100vw - 60px);
+    }
   }
   & input:focus {
     outline: 1.5px solid black;
   }
   & #save, & #cancel {
+    width: auto;
     @include btn;
     @include btn-small;
     border: 2px solid var(--primary-color);
