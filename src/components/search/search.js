@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Card from '../card/card';
 import fetchURL from '../../helperFunctions/fetch';
+import './search.scss';
 
 export default function Search() {
   const [searchParams] = useSearchParams();
@@ -15,8 +16,8 @@ export default function Search() {
     }
   }, [state]);
   return (
-    <>
-      <p style={{ padding: '20px 64px 0 64px' }}>
+    <div className="main">
+      <p>
         Search results for
         {' '}
         <b>
@@ -30,6 +31,6 @@ export default function Search() {
           recipes && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
         }
       </div>
-    </>
+    </div>
   );
 }
