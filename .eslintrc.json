@@ -30,7 +30,7 @@
             }
         ],
         "react/react-in-jsx-scope": "off",
-        "linebreak-style": ["error", "windows"],
+        "linebreak-style": 0,
         "no-underscore-dangle": "off"
     }
 }
