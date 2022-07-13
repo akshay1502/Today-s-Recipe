@@ -16,7 +16,7 @@ export default function Search() {
     }
   }, [state]);
   return (
-    <div className="main">
+    <div className="main" style={{ paddingTop: '20px' }}>
       <p>
         Search results for
         {' '}

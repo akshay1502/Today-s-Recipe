@@ -6,8 +6,6 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import NestedList from '@editorjs/nested-list';
 import Embed from '@editorjs/embed';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Checklist from '@editorjs/checklist';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import toastMsg from '../../helperFunctions/toast';
 
@@ -49,10 +47,6 @@ export default function AddRecipe() {
               twitter: true,
             },
           },
-          inlineToolbar: true,
-        },
-        Checklist: {
-          class: Checklist,
           inlineToolbar: true,
         },
       },
