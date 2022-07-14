@@ -10,7 +10,7 @@ export default function Search() {
   const state = searchParams.get('query');
   const [recipes, setRecipes] = useState(null);
   useEffect(async () => {
-    const { result, statusValue } = await fetchURL(`recipes/search?query=${state}`, 'GET');
+    const { result, statusValue } = await fetchURL(`/recipes/search?query=${state}`, 'GET');
     if (statusValue === 200) {
       setRecipes(result);
     }

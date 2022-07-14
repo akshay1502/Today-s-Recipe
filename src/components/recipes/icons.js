@@ -18,13 +18,13 @@ export default function IconsPack({ recipe, user }) {
     bookmarkBtn = document.getElementById('bookmarkBtn');
     if (bookmark) {
       bookmarkBtn.style.fill = 'var(--bookmark-btn)';
-      const { statusValue } = await fetchURL(`recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
+      const { statusValue } = await fetchURL(`/recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
       if (statusValue === 200) {
         setBookmark(0);
       }
     } else {
       bookmarkBtn.style.fill = 'white';
-      const { statusValue } = await fetchURL(`recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
+      const { statusValue } = await fetchURL(`/recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
       if (statusValue === 200) {
         setBookmark(1);
       }
@@ -34,13 +34,13 @@ export default function IconsPack({ recipe, user }) {
     likeBtn = document.getElementById('likeBtn');
     if (like) {
       likeBtn.style.fill = 'var(--like-btn)';
-      const { statusValue } = await fetchURL(`recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 1 });
+      const { statusValue } = await fetchURL(`/recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 1 });
       if (statusValue === 200) {
         setLike(0);
       }
     } else {
       likeBtn.style.fill = 'white';
-      const { statusValue } = await fetchURL(`recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 0 });
+      const { statusValue } = await fetchURL(`/recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 0 });
       if (statusValue === 200) {
         setLike(1);
       }
@@ -57,7 +57,7 @@ export default function IconsPack({ recipe, user }) {
   };
   const handleCommentInput = async () => {
     const comment = document.getElementById('comment').value.trim();
-    const { result } = await fetchURL(`recipes/${recipeId}/comment`, 'POST', { userId, comment });
+    const { result } = await fetchURL(`/recipes/${recipeId}/comment`, 'POST', { userId, comment });
     console.log(result);
   };
 
@@ -118,7 +118,7 @@ function RenderComment({ comment, self }) {
   console.log('rendering');
   const [user, setUser] = useState('null');
   useEffect(async () => {
-    const { result } = await fetchURL(`users/${comment.userId}`, 'GET');
+    const { result } = await fetchURL(`/users/${comment.userId}`, 'GET');
     setUser(result);
   }, [comment]);
   return (

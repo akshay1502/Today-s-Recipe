@@ -7,7 +7,7 @@ const fetchURL = async (url, method, data = null) => {
   if (method !== 'GET') {
     options = { ...options, body: JSON.stringify(data) };
   }
-  const fetchResponse = await fetch(`http://localhost:5000/${url}`, options);
+  const fetchResponse = await fetch(`${process.env.REACT_APP_API_URL}${url}`, options);
   const statusValue = fetchResponse.status;
   const result = await fetchResponse.json();
   return { result, statusValue };

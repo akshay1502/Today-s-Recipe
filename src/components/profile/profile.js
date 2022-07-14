@@ -70,7 +70,7 @@ function EditProfile({ user }) {
     if (!editLastName.length) { valueRequiredError.lastName = 'Last name is required'; }
     if (!editEmail.length) { valueRequiredError.email = 'Email is required'; }
     if (formErrors.editFirstName === '' && formErrors.editLastName === '' && formErrors.editEmail === '') {
-      const { result } = await fetchURL('users/self/update', 'PATCH', {
+      const { result } = await fetchURL('/users/self/update', 'PATCH', {
         firstName: editFirstName,
         lastName: editLastName,
         email: editEmail,

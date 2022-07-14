@@ -14,7 +14,7 @@ export default function Header({ user, fetchStatus }) {
   const [open, setOpen] = useState(false);
   const [searchBox, setSearchBox] = useState('');
   const logout = async () => {
-    const { statusValue } = await fetchURL('logout', 'GET');
+    const { statusValue } = await fetchURL('/logout', 'GET');
     if (statusValue === 200) {
       window.location.href = '/';
     }

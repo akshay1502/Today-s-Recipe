@@ -21,7 +21,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [fetchStatus, setFetchStatus] = useState(null);
   useEffect(async () => {
-    const { result, statusValue } = await fetchURL('users/self', 'GET');
+    const { result, statusValue } = await fetchURL('/users/self', 'GET');
     if (statusValue === 200) {
       setUser(result);
     }
