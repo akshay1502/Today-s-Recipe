@@ -18,6 +18,7 @@ import Search from './components/search/search';
 import fetchURL from './helperFunctions/fetch';
 
 function App() {
+  console.log(process.env.REACT_APP_API_URL);
   const [user, setUser] = useState(null);
   const [fetchStatus, setFetchStatus] = useState(null);
   useEffect(async () => {
