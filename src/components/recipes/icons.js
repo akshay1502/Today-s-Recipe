@@ -1,9 +1,10 @@
 import {
   FiThumbsUp, FiBookmark, FiShare2, FiMessageCircle, FiMoreVertical,
 } from 'react-icons/fi';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import fetchURL from '../../helperFunctions/fetch';
+import toastMsg from '../../helperFunctions/toast';
 
 export default function IconsPack({ recipe, user }) {
   const { _id: recipeId, likes, comments } = recipe;
@@ -11,9 +12,11 @@ export default function IconsPack({ recipe, user }) {
   const [like, setLike] = useState(1);
   const [bookmark, setBookmark] = useState(1);
   const [showComments, setShowComments] = useState(false);
+  const [textarea, setTextarea] = useState('');
   let bookmarkBtn;
   let likeBtn;
   let commentBtn;
+  const textareaRef = useRef(null);
   const addToBookmark = async () => {
     bookmarkBtn = document.getElementById('bookmarkBtn');
     if (bookmark) {
@@ -56,9 +59,15 @@ export default function IconsPack({ recipe, user }) {
     setShowComments(!showComments);
   };
   const handleCommentInput = async () => {
-    const comment = document.getElementById('comment').value.trim();
-    const { result } = await fetchURL(`/recipes/${recipeId}/comment`, 'POST', { userId, comment });
-    console.log(result);
+    const comment = textareaRef.current.value.trim();
+    if (comment.length) {
+      const { statusValue } = await fetchURL(`/recipes/${recipeId}/comment`, 'POST', { userId, comment });
+      if (statusValue === 200) {
+        toastMsg('info', 'Comment added');
+      }
+    } else {
+      alert('Comment can\'t be empty');
+    }
   };
 
   useEffect(() => {
@@ -84,13 +93,25 @@ export default function IconsPack({ recipe, user }) {
           <FiMessageCircle size="2rem" strokeWidth="1.5" id="commentBtn" onClick={() => { commentOnRecipe(); }} style={{ marginRight: '12px' }} />
           {comments.length || 0}
         </div>
-        <div><FiBookmark size="2rem" strokeWidth="1.5" id="bookmarkBtn" onClick={addToBookmark} /></div>
-        <div><FiShare2 size="2rem" strokeWidth="1.5" id="shareBtn" /></div>
+        <div>
+          <FiBookmark size="2rem" strokeWidth="1.5" id="bookmarkBtn" onClick={addToBookmark} />
+        </div>
+        <div>
+          <FiShare2 size="2rem" strokeWidth="1.5" id="shareBtn" />
+        </div>
       </div>
       { showComments && (
       <>
         <div>
-          <textarea id="comment" name="comment" rows="3" cols="40" style={{ padding: '8px' }} />
+          <textarea
+            ref={textareaRef}
+            value={textarea}
+            onChange={(e) => setTextarea(e.target.value)}
+            name="comment"
+            rows="3"
+            cols="40"
+            style={{ padding: '8px' }}
+          />
           <button type="submit" id="addCmt" onClick={handleCommentInput}>Add Comment</button>
         </div>
         { Boolean(comments.length) && (
@@ -115,7 +136,6 @@ export default function IconsPack({ recipe, user }) {
 }
 
 function RenderComment({ comment, self }) {
-  console.log('rendering');
   const [user, setUser] = useState('null');
   useEffect(async () => {
     const { result } = await fetchURL(`/users/${comment.userId}`, 'GET');

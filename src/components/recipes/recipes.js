@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import './recipes.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import IconsPack from './icons';
 import { RenderRecipe, RenderIngredients } from './renderRecipeAndIngredients';
@@ -18,18 +18,12 @@ export default function Recipes({ user }) {
   const [ingredients, setIngredients] = useState(null);
 
   useEffect(async () => {
-    const fetchRecipe = await fetch(`http://localhost:5000/recipes/${id}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const getRecipeData = await fetchRecipe.json();
-    const parseIngredients = edjsParser.parse(getRecipeData.ingredients);
-    const parseRecipe = edjsParser.parse(getRecipeData.recipe);
-    setRecipeData(getRecipeData);
+    const { result } = await fetchURL(`/recipes/${id}`, 'GET');
+    const parseIngredients = edjsParser.parse(result.ingredients);
+    const parseRecipe = edjsParser.parse(result.recipe);
+    setRecipeData(result);
     setRecipe(parseRecipe);
     setIngredients(parseIngredients);
-    console.log(parseRecipe);
   }, [id]);
 
   return (
@@ -65,16 +59,19 @@ export default function Recipes({ user }) {
 
 function Follow({ user, author, authorName }) {
   const { _id, following } = user;
+  const followBtnRef = useRef(null);
   const followUser = async (userId) => {
     const { statusValue } = await fetchURL(`/users/${userId}/follow`, 'PATCH', { follow: 1 });
     if (statusValue === 200) {
-      document.getElementById('follow').style.display = 'none';
+      followBtnRef.current.style.display = 'none';
       toastMsg('info', `You are following ${authorName}`);
     }
   };
   return (
     <>
-      { !(_id === author) && !following.includes(author) && (<button type="button" id="follow" onClick={() => followUser(author)}>Follow</button>) }
+      { !(_id === author)
+      && !following.includes(author)
+      && (<button type="button" id="follow" ref={followBtnRef} onClick={() => followUser(author)}>Follow</button>) }
     </>
   );
 }

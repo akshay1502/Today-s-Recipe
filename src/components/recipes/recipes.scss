@@ -1,18 +1,17 @@
 @import '../../mixin.scss';
 
 .recipe {
-  & .userInfo {
+  .userInfo {
     display: flex;
     align-items: center;
     margin-top: 8px;
-    & .userProfileImage { 
+    .userProfileImage { 
       @include flexCenter;
       border-radius: 50%;
       height: 32px;
       width: 32px;
       margin-right: 8px;
     }
-    & > p { font-weight: 300; }
     & button {
       @include btn;
       @include btn-small;
@@ -21,13 +20,13 @@
       letter-spacing: 1px;
     }
   }
-  & .uploadDate { 
+  .uploadDate { 
     font-weight: 300; 
     margin-top: 4px;
     font-size: 14px;
     color: var(--text-primary);
   }
-  & .imageContainer {
+  .imageContainer {
     display: flex;
     justify-content: center;
     margin: 32px 0;
@@ -36,6 +35,23 @@
       max-height: 500px;
       max-width: 90vw;
       object-fit: contain;
+    }
+  }
+  .ingredients, .recipeContainer {
+    color: var(--text-primary);
+    list-style-position: inside;
+    & > h1 {
+      text-decoration: underline;
+      text-decoration-color: var(--primary-color);
+      text-decoration-thickness: 4px;
+    }
+    #recipe, #ingredientList {
+      font-size: 18px;
+      letter-spacing: 1px;
+      margin-top: 16px;
+      margin-bottom: 32px;
+      color: var(--text-primary);
+      & h2, h3 { font-weight: 500; }
     }
   }
   & .commentBox {
@@ -61,25 +77,16 @@
       }
     }
   }
-  & .iconsPack {
+  .iconsPack {
     display: flex;
     margin-bottom: 32px;
     & > div { 
       margin-right: 48px; 
       & span { margin-left: 8px; }
     }
-  }
-  & .likes, .comments {
-    display: flex;
-    align-items: center;
-  }
-  .ingredients, .recipeContainer {
-    color: var(--text-primary);
-    list-style-position: inside;
-    & > h1 {
-      text-decoration: underline;
-      text-decoration-color: var(--primary-color);
-      text-decoration-thickness: 4px;
+    .likes, .comments {
+      display: flex;
+      align-items: center;
     }
   }
   #addCmt {
@@ -89,17 +96,9 @@
     margin-top: 16px;
     margin-bottom: 32px;
   }
-  & #likeBtn, #commentBtn, #bookmarkBtn, #shareBtn { 
+  #likeBtn, #commentBtn, #bookmarkBtn, #shareBtn { 
     cursor: pointer;
     stroke-width: 1;
-  }
-  #recipe, #ingredientList {
-    font-size: 18px;
-    letter-spacing: 1px;
-    margin-top: 16px;
-    margin-bottom: 32px;
-    color: var(--text-primary);
-    & h2, h3 { font-weight: 500; }
   }
 }
 
