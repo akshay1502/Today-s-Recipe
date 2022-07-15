@@ -8,9 +8,7 @@ export default function Card({ recipe, self }) {
   return (
     <Link to={`/recipes/${recipe._id}`} className="link" key={recipe._id}>
       <div key={recipe.id} className="card">
-        <div className="imageContainer">
-          <img src={recipe.image} alt="food dish" />
-        </div>
+        <img src={recipe.image} alt="food dish" className="imageContainer" />
         <div className="description">
           <h4>{recipe.title.blocks[0].data.text}</h4>
           <div className="descriptionFooter">
