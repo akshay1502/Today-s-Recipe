@@ -1,10 +1,10 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import fetchURL from '../../helperFunctions/fetch';
 import toastMsg from '../../helperFunctions/toast';
 import 'react-toastify/dist/ReactToastify.css';
 import './signup.scss';
@@ -22,7 +22,8 @@ export default function Signup({ user }) {
     email: '',
     password: 'Use 8 or more characters with a mix of alphabets, numbers and special characters.',
   });
-  const [show, setShow] = useState(false);
+  const [hide, setHide] = useState(false);
+  const passwordRef = useRef(null);
   useEffect(() => {
     if (user) {
       window.location.href = '/';
@@ -65,44 +66,47 @@ export default function Signup({ user }) {
     return null;
   };
   const changePasswordType = () => {
-    const password = document.getElementById('password');
-    if (show) {
-      password.type = 'password';
-    } else {
-      password.type = 'text';
-    }
-    setShow(!show);
+    passwordRef.current.type = hide ? 'password' : 'text';
+    setHide(!hide);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
       firstName, lastName, email, password,
     } = formValues;
-    const valueRequiredError = {};
+    const valueRequiredError = {
+      email: '', password: '', firstName: '', lastName: '',
+    };
     if (!firstName.length) { valueRequiredError.firstName = 'First name is required'; }
     if (!lastName.length) { valueRequiredError.lastName = 'Last name is required'; }
     if (!email.length) { valueRequiredError.email = 'Email is required'; }
     if (!password.length) { valueRequiredError.password = 'Password is required'; }
-    if (formErrors.firstName === '' && formErrors.lastName === '' && formErrors.email === '' && formErrors.password === '') {
-      const res = await fetch('http://localhost:5000/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(formValues),
-      });
-      const resData = await res.json();
-      if (resData.id) {
+    if (formErrors.firstName === ''
+    && formErrors.lastName === ''
+    && formErrors.email === ''
+    && formErrors.password === ''
+    && firstName.length && lastName.length && email.length && password.length) {
+      const { result } = await fetchURL('/signup', 'POST', formValues);
+      if (result.id) {
         setFormValues({
           firstName: '',
           lastName: '',
           email: '',
           password: '',
         });
-        window.location.href = '/';
+        setFormErrors({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+        });
+        window.history.replaceState({}, '', '/');
+        window.location.reload();
       } else {
-        toastMsg('error', resData.message);
+        toastMsg('error', result.message);
       }
     } else {
+      alert(`${valueRequiredError.email}\n${valueRequiredError.password}\n${valueRequiredError.firstName}\n${valueRequiredError.lastName}`);
       setFormErrors({ ...formErrors, ...valueRequiredError });
     }
   };
@@ -111,7 +115,7 @@ export default function Signup({ user }) {
       <img src="/assests/signupBanner.png" alt="SignupBannerImage" id="signupBannerImage" />
       <form className="signupForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">
-          <div>Create Account</div>
+          <h2>Create Account</h2>
           <p>
             Already have an account?
             {' '}
@@ -120,63 +124,70 @@ export default function Signup({ user }) {
         </div>
         <div className="fullName">
           <div>
-            <label htmlFor="firstName">Fisrt Name</label>
-            <br />
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              value={formValues.firstName}
-              onChange={handleInputChange}
-            />
+            <label htmlFor="firstName">
+              Fisrt Name
+              <br />
+              <input
+                type="text"
+                name="firstName"
+                id="firstName"
+                value={formValues.firstName}
+                onChange={handleInputChange}
+              />
+            </label>
             <small>{formErrors.firstName}</small>
           </div>
           <div>
-            <label htmlFor="lastName">Last Name</label>
-            <br />
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              value={formValues.lastName}
-              onChange={handleInputChange}
-            />
+            <label htmlFor="lastName">
+              Last Name
+              <br />
+              <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                value={formValues.lastName}
+                onChange={handleInputChange}
+              />
+            </label>
             <small>{formErrors.lastName}</small>
           </div>
         </div>
         <div>
-          <label htmlFor="email">Email</label>
-          <br />
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={formValues.email}
-            onChange={handleInputChange}
-          />
+          <label htmlFor="email">
+            Email
+            <br />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formValues.email}
+              onChange={handleInputChange}
+            />
+          </label>
           <small>{formErrors.email}</small>
         </div>
         <div>
-          <label htmlFor="password">Password</label>
-          <br />
-          <div className="password">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="eg.user@123"
-              value={formValues.password}
-              onChange={handleInputChange}
-            />
-            {
-              show
-                ? <AiFillEye size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
-                : <AiFillEyeInvisible size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
-            }
-          </div>
-          <small style={{ visibility: 'visible' }}>
-            { formErrors.password }
-          </small>
+          <label htmlFor="password">
+            Password
+            <br />
+            <div className="password">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="eg.user@123"
+                ref={passwordRef}
+                value={formValues.password}
+                onChange={handleInputChange}
+              />
+              {
+                hide
+                  ? <AiFillEye size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+                  : <AiFillEyeInvisible size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+              }
+            </div>
+          </label>
+          <small>{ formErrors.password }</small>
         </div>
         <input type="submit" value="Sign up" id="signupBtn" />
       </form>

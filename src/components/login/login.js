@@ -1,11 +1,9 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './login.scss';
+import fetchURL from '../../helperFunctions/fetch';
+import toastMsg from '../../helperFunctions/toast';
 
 export default function Login({ user }) {
   const [formValues, setFormValues] = useState({
@@ -16,7 +14,8 @@ export default function Login({ user }) {
     email: '',
     password: '',
   });
-  const [show, setShow] = useState(false);
+  const [hide, setHide] = useState(false);
+  const passwordRef = useRef(null);
   useEffect(() => {
     if (user) {
       window.location.href = '/';
@@ -35,6 +34,11 @@ export default function Login({ user }) {
         setFormErrors({ ...formErrors, [name]: errorMsg });
         break;
       }
+      case 'password': {
+        const errorMsg = value.length ? '' : 'Password is required';
+        setFormErrors({ ...formErrors, [name]: errorMsg });
+        break;
+      }
       default:
         break;
     }
@@ -43,57 +47,40 @@ export default function Login({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formValues;
-    const valueRequiredError = {};
+    const valueRequiredError = { email: '', password: '' };
     if (!email.length) { valueRequiredError.email = 'Email is required'; }
     if (!password.length) { valueRequiredError.password = 'Password is required'; }
-    if (formErrors.email === '' && formErrors.password === '') {
-      const res = await fetch('http://localhost:5000/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formValues),
-      });
-      const resData = await res.json();
-      if (resData.id) {
+    if (formErrors.email === '' && formErrors.password === '' && email.length && password.length) {
+      const { result } = await fetchURL('/login', 'POST', formValues);
+      if (result.id) {
         setFormValues({
+          email: '',
+          password: '',
+        });
+        setFormErrors({
           email: '',
           password: '',
         });
         window.history.replaceState({}, '', '/');
         window.location.reload();
       } else {
-        toast.error(resData.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-        });
+        toastMsg('error', result.message);
       }
     } else {
+      alert(`${valueRequiredError.email}\n${valueRequiredError.password}`);
       setFormErrors({ ...formErrors, ...valueRequiredError });
     }
   };
   const changePasswordType = () => {
-    const password = document.getElementById('password');
-    if (show) {
-      password.type = 'password';
-    } else {
-      password.type = 'text';
-    }
-    setShow(!show);
+    passwordRef.current.type = hide ? 'password' : 'text';
+    setHide(!hide);
   };
   return (
-    <div className="form auth">
+    <div className="form">
       <img src="/assests/loginBanner.jpg" alt="LoginBannerImage" id="loginBannerImage" />
       <form className="loginForm" onSubmit={handleSubmit} method="POST">
         <div className="formHeader">
-          <div>Login</div>
+          <h2>Login</h2>
           <p>
             Don&#8216;t have an account?
             {' '}
@@ -101,39 +88,43 @@ export default function Login({ user }) {
           </p>
         </div>
         <div>
-          <label htmlFor="email">Email</label>
-          <br />
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={formValues.email}
-            onChange={handleInputChange}
-          />
+          <label htmlFor="email">
+            Email
+            <br />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={formValues.email}
+              onChange={handleInputChange}
+            />
+          </label>
           <small>{formErrors.email}</small>
         </div>
         <div>
-          <label htmlFor="password">Password</label>
-          <br />
-          <div className="password">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              value={formValues.password}
-              onChange={handleInputChange}
-            />
-            {
-              show
-                ? <AiFillEye size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
-                : <AiFillEyeInvisible size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
-            }
-          </div>
+          <label htmlFor="password">
+            Password
+            <br />
+            <div className="password">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                ref={passwordRef}
+                value={formValues.password}
+                onChange={handleInputChange}
+              />
+              {
+                hide
+                  ? <AiFillEye size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+                  : <AiFillEyeInvisible size="1.5rem" className="hideOrShowpass" onClick={changePasswordType} />
+              }
+            </div>
+          </label>
           <small>{formErrors.password}</small>
         </div>
         <input type="submit" value="Login" id="loginBtn" />
       </form>
-      <ToastContainer />
     </div>
   );
 }

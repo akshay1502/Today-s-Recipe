@@ -1,37 +1,32 @@
-.auth {
-  padding: 40px 64px;
-}
+@import '../../mixin.scss';
+
+//  login is using few classes from signup file
 .form {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   justify-content: center;
-  > #loginBannerImage {
-    width: 40%;
-    height: calc(100vh - 80px);
+  #loginBannerImage {
+    width: 50%;
+    object-fit: cover;
   }
-  & .loginForm {
+  .loginForm {
     background-color: var(--primary-color);
-    width: 40%;
+    width: 50%;
     padding: 32px 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    & #loginBtn {
-      width: 100%;
-      background-color: var(--secondary-color);
-      color: var(--primary-color);
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
+    #loginBtn {
+      @include btn(var(--secondary-color), var(--primary-color));
+      @include btn-large;
       font-size: 24px;
-      padding: 8px;
     }
-    & .password {
+    .password {
       display: flex;
       justify-content: flex-end;
       align-items: center;
       position: relative;
-      & .hideOrShowpass {
+      .hideOrShowpass {
         position: absolute;
         right: 16px;
         bottom: 4px;
@@ -42,9 +37,8 @@
 }
 
 @media screen and (max-width: 450px) {
-  .auth { padding: 0; }
   .form {
-    > #loginBannerImage { display: none; }
+    #loginBannerImage { display: none; }
     & .loginForm {
       width: 100%;
       padding: 20px;

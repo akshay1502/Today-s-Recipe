@@ -1,26 +1,21 @@
-.auth {
-  padding: 40px 64px;
-}
+@import '../../mixin.scss';
+
 .form {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   justify-content: center;
-  & .formHeader {
-    > div {
-      font-weight: bold;
-      font-size: 24px;
-    }
-    > p {
+  .formHeader {
+    & > p {
       font-weight: 300;
       font-size: 13px;
-      > a { font-weight: 400; color: black; }
+      & > a { font-weight: 400; color: black; }
     }
   }
-  > #signupBannerImage {
+  #signupBannerImage {
     width: 50%;
-    height: calc(100vh - 80px);
+    object-fit: cover;
   }
-  & input {
+  input {
     width: 100%;
     font-size: 16px;
     padding: 4px 8px;
@@ -28,35 +23,30 @@
     border-radius: 4px;
     border: 1px solid rgba(128, 128, 128, 80%);
   }
-  & input:focus {
+  input:focus {
     outline: 1.5px solid black;
   }
-  & label {
+  label {
     font-size: 18px;
     font-weight: 500;
   }
-  & .signupForm {
+  .signupForm {
     background-color: var(--primary-color);
     width: 50%;
     padding: 32px 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    & .fullName {
+    .fullName {
       display: flex;
       & div:first-child { margin-right: 24px;}
     }
-    & #signupBtn {
-      width: 100%;
-      background-color: var(--secondary-color);
-      color: var(--primary-color);
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
+    #signupBtn {
+      @include btn(var(--secondary-color), var(--primary-color));
+      @include btn-large;
       font-size: 24px;
-      padding: 8px;
     }
-    & .password {
+    .password {
       display: flex;
       justify-content: flex-end;
       align-items: center;
