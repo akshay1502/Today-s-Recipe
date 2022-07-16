@@ -17,20 +17,39 @@ export default function Search() {
   }, [state]);
   return (
     <div className="main" style={{ paddingTop: '20px' }}>
-      <p>
-        Search results for
-        {' '}
-        <b>
-          &quot;
-          {state}
-          &quot;
-        </b>
-      </p>
-      <div className="grid">
-        {
-          recipes && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
-        }
-      </div>
+      {
+        recipes
+          && recipes.length
+          ? (
+            <>
+              <p>
+                Search results for
+                {' '}
+                <b>
+                  &quot;
+                  {state}
+                  &quot;
+                </b>
+              </p>
+              <div className="grid">
+                {
+                recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
+              }
+              </div>
+            </>
+          )
+          : (
+            <p>
+              No recipes found for
+              {' '}
+              <b>
+                &quot;
+                {state}
+                &quot;
+              </b>
+            </p>
+          )
+      }
     </div>
   );
 }

@@ -1,0 +1,16 @@
+.main {
+  & > .navbar-input { display: none;}
+}
+
+@media screen and (max-width: 450px) {
+  .main {
+    & > .navbar-input {
+      display: flex;
+      margin-bottom: 20px;
+      & #searchBox {
+        border: .5px solid black;
+      }
+      & .searchIcon { fill: black;}
+    }
+  }
+}

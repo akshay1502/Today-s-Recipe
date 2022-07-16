@@ -1,26 +1,22 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
-import { AiOutlineSearch, AiFillCaretDown } from 'react-icons/ai';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AiFillCaretDown } from 'react-icons/ai';
+import { Link, useLocation } from 'react-router-dom';
+import SearchBox from '../search/searchBox';
 import './header.scss';
 import fetchURL from '../../helperFunctions/fetch';
 
 export default function Header({ user, fetchStatus }) {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const [searchBox, setSearchBox] = useState('');
   const logout = async () => {
     const { statusValue } = await fetchURL('/logout', 'GET');
     if (statusValue === 200) {
       window.location.href = '/';
     }
-  };
-  const searchForQuery = () => {
-    navigate(`/search?query=${searchBox}`);
   };
   return (
     <>
@@ -29,16 +25,7 @@ export default function Header({ user, fetchStatus }) {
         : (
           <nav className="navbar">
             <Link to="/" className="link navbar-brand">Today&apos;s Recipe</Link>
-            <div className="navbar-input">
-              <input
-                type="text"
-                id="searchBox"
-                name="searchBox"
-                value={searchBox}
-                onChange={(e) => setSearchBox(e.target.value)}
-              />
-              <AiOutlineSearch size="2rem" style={{ fill: 'white', cursor: 'pointer' }} type="button" onClick={searchForQuery} />
-            </div>
+            <SearchBox className="resSearch" />
             <div className="navbar-menu">
               {fetchStatus === 200
                 ? (
@@ -46,7 +33,7 @@ export default function Header({ user, fetchStatus }) {
                     <button type="button" className="addRecipe">
                       <Link to="/addRecipe" className="link">Add recipe</Link>
                     </button>
-                    <div className="user">
+                    <div className="user" onClick={() => setOpen(!open)}>
                       {user.profileImage
                         ? <img src={user.profileImage} alt={user.firstName} className="userProfileImage" />
                         : (
@@ -54,12 +41,13 @@ export default function Header({ user, fetchStatus }) {
                             {`${user.firstName[0]}`}
                           </div>
                         )}
-                      <AiFillCaretDown onClick={() => setOpen(!open)} className="triangle" />
-                      { open && (
+                      <AiFillCaretDown className="triangle" />
+                      {open && (
                       <div id="subMenuHolder">
                         <ul className="subMenu">
                           <Link to={`/profile/${user._id}`} onClick={() => setOpen(!open)}>Profile</Link>
-                          <Link to="/">Notifications</Link>
+                          <Link to="/addRecipe" className="resAddRecipe">Add recipe</Link>
+                          {/* <Link to="/">Notifications</Link> will be using in next update */}
                           <li onClick={logout}>Logout</li>
                         </ul>
                       </div>

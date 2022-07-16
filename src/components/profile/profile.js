@@ -11,17 +11,15 @@ export default function Profile() {
 }
 
 function EditProfile({ user }) {
-  const { firstName, lastName, email } = user;
+  const { firstName, lastName } = user;
   const [previewSource, setPreviewSource] = useState(user.profileImage);
   const [formValues, setFormValues] = useState({
     editFirstName: firstName,
     editLastName: lastName,
-    editEmail: email,
   });
   const [formErrors, setFormErrors] = useState({
     editFirstName: '',
     editLastName: '',
-    editEmail: '',
   });
   const handleProfileImage = (e) => {
     const file = e.target.files[0];
@@ -50,12 +48,6 @@ function EditProfile({ user }) {
         setFormErrors({ ...formErrors, [name]: errorMsg });
         break;
       }
-      case 'editEmail': {
-        const result = /^\S+@\S+\.\S+$/.test(value);
-        const errorMsg = result ? '' : 'Enter a valid email address.';
-        setFormErrors({ ...formErrors, [name]: errorMsg });
-        break;
-      }
       default:
         break;
     }
@@ -63,24 +55,21 @@ function EditProfile({ user }) {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     const {
-      editFirstName, editLastName, editEmail,
+      editFirstName, editLastName,
     } = formValues;
     const valueRequiredError = {};
     if (!editFirstName.length) { valueRequiredError.firstName = 'First name is required'; }
     if (!editLastName.length) { valueRequiredError.lastName = 'Last name is required'; }
-    if (!editEmail.length) { valueRequiredError.email = 'Email is required'; }
-    if (formErrors.editFirstName === '' && formErrors.editLastName === '' && formErrors.editEmail === '') {
+    if (formErrors.editFirstName === '' && formErrors.editLastName === '' && editFirstName.length && editLastName.length) {
       const { result } = await fetchURL('/users/self/update', 'PATCH', {
         firstName: editFirstName,
         lastName: editLastName,
-        email: editEmail,
         profileImage: previewSource,
       });
       if (result.id) {
         setFormValues({
           firstName: '',
           lastName: '',
-          email: '',
           password: '',
         });
         window.location.href = `/profile/${user._id}`;
@@ -109,7 +98,7 @@ function EditProfile({ user }) {
           style={{ display: 'none' }}
           id="inputImage"
         />
-        <BiImageAdd size="2rem" className="addImage" onClick={() => document.getElementById('inputImage').click()} />
+        <BiImageAdd size="32px" className="addImage" onClick={() => document.getElementById('inputImage').click()} />
       </div>
       <div>
         <label htmlFor="editFirstName">First Name</label>
@@ -134,18 +123,6 @@ function EditProfile({ user }) {
           onChange={handleEditInputChange}
         />
         <small>{formErrors.editLastName}</small>
-      </div>
-      <div>
-        <label htmlFor="editEmail">Email</label>
-        <br />
-        <input
-          name="editEmail"
-          id="editEmail"
-          type="email"
-          value={formValues.editEmail}
-          onChange={handleEditInputChange}
-        />
-        <small>{formErrors.editEmail}</small>
       </div>
       <div>
         <input type="submit" value="Save" id="save" />

@@ -86,18 +86,18 @@ export default function IconsPack({ recipe, user }) {
     <>
       <div className="iconsPack">
         <div className="likes">
-          <FiThumbsUp size="2rem" strokeWidth="1.5" id="likeBtn" onClick={likeRecipe} style={{ marginRight: '12px' }} />
+          <FiThumbsUp size="32px" strokeWidth="1.5" id="likeBtn" onClick={likeRecipe} style={{ marginRight: '12px' }} />
           {likes.length}
         </div>
         <div className="comments">
-          <FiMessageCircle size="2rem" strokeWidth="1.5" id="commentBtn" onClick={() => { commentOnRecipe(); }} style={{ marginRight: '12px' }} />
+          <FiMessageCircle size="32px" strokeWidth="1.5" id="commentBtn" onClick={() => { commentOnRecipe(); }} style={{ marginRight: '12px' }} />
           {comments.length || 0}
         </div>
         <div>
-          <FiBookmark size="2rem" strokeWidth="1.5" id="bookmarkBtn" onClick={addToBookmark} />
+          <FiBookmark size="32px" strokeWidth="1.5" id="bookmarkBtn" onClick={addToBookmark} />
         </div>
         <div>
-          <FiShare2 size="2rem" strokeWidth="1.5" id="shareBtn" />
+          <FiShare2 size="32px" strokeWidth="1.5" id="shareBtn" />
         </div>
       </div>
       { showComments && (

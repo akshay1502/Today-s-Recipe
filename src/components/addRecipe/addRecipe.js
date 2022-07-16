@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
 import './addRecipe.scss';
+import { useNavigate } from 'react-router-dom';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
@@ -8,12 +9,14 @@ import NestedList from '@editorjs/nested-list';
 import Embed from '@editorjs/embed';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import toastMsg from '../../helperFunctions/toast';
+import fetchURL from '../../helperFunctions/fetch';
 
 export default function AddRecipe() {
   const [previewSource, setPreviewSource] = useState('');
   const recipeEditor = useRef(null);
   const ingredientListEditor = useRef(null);
   const recipeTitleEditor = useRef(null);
+  const navigate = useNavigate();
   useEffect(() => {
     recipeTitleEditor.current = new EditorJS({
       holder: 'recipeTitle',
@@ -77,22 +80,16 @@ export default function AddRecipe() {
       || !previewSource.length) {
       alert('Please fill in all the details');
     } else {
-      const res = await fetch('http://localhost:5000/recipes', {
-        method: 'POST',
-        body: JSON.stringify({
-          title: recipeTitleEditorData,
-          ingredients: ingredientListEditorData,
-          recipe: recipeEditorData,
-          image: previewSource,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+      const { result } = await fetchURL('/recipes', 'POST', {
+        title: recipeTitleEditorData,
+        ingredients: ingredientListEditorData,
+        recipe: recipeEditorData,
+        image: previewSource,
       });
-      const resData = await res.json();
-      if (resData.id) {
-        toastMsg('info', resData.id);
+      if (result.id) {
+        navigate(`/recipes/${result.id}`);
       } else {
-        toastMsg('error', resData.message);
+        toastMsg('error', result.message);
       }
     }
   };
@@ -118,7 +115,7 @@ export default function AddRecipe() {
           ? (
             <div id="recipeImage">
               <div style={{ position: 'relative' }}>
-                <AiOutlineCloseCircle size="2rem" id="ImageCross" onClick={closeImageInput} />
+                <AiOutlineCloseCircle size="32px" id="ImageCross" onClick={closeImageInput} />
                 <img src={previewSource} alt="RecipeImage" />
               </div>
             </div>

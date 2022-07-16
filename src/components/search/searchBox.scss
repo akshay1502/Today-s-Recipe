@@ -1,0 +1,14 @@
+.navbar-input {
+  display: flex;
+  & #searchBox {
+    width: 100%;
+    border-radius: 4px;
+    margin-right: 10px;
+    padding: 0 8px;
+    border: none;
+    font-size: 16px;
+  }
+  .searchIcon {
+    cursor: pointer;
+  }
+}

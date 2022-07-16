@@ -7,57 +7,50 @@
   justify-content: space-between;
   align-items: center;
   padding:0px 64px;
-  & .navbar-brand {
+  .navbar-brand {
     color: var(--primary-color);
     font-size: 40px;
     font-weight: var(--semi-bold-font);
     cursor: pointer;
   }
-  & .navbar-input {
-    display: flex;
-    & #searchBox {
-      border-radius: 4px;
-      margin-right: 10px;
-      padding: 0 8px;
-      border: none;
-      font-size: 16px;
-    }
+  > .navbar-input {
+    > .searchIcon { fill: white;}
   }
-  & .navbar-menu {
+  .navbar-menu {
     font-size: 24px;
     display: flex;
-    & .addRecipe {
+    .addRecipe {
       @include btn;
       @include btn-small;
       margin-right: 4rem;
-      > a {
+      & > a {
         color: var(--secondary-color);
       }
     }
-    & .login {
+    .login {
       margin-right: 32px;
       & > a {
         margin-right:5px;
         color: white;
       }
     }
-    & .user {
+    .user {
       display: flex;
       align-items: center;
-      & .userProfileImage { 
+      cursor: pointer;
+      .userProfileImage { 
         @include flexCenter;
         border-radius: 50%;
         width: 40px;
         height: 40px;
       }
-      & .triangle {
-        cursor: pointer;
+      .triangle {
         margin-left: 8px;
         fill: white;
       }
-      & #subMenuHolder {
+      #subMenuHolder {
         position: relative;
-        & .subMenu {
+        .subMenu {
           display: inline-block;
           border: 1px solid var(--secondary-color);
           min-width: 8rem;
@@ -77,6 +70,7 @@
             cursor: pointer;
             &:hover { background: lightgrey; }
           }
+          .resAddRecipe { display: none; }
         }
       }
     }
@@ -87,18 +81,19 @@
   .navbar {
     height: 60px;
     padding: 0px 20px;
-    & .navbar-brand { font-size: 24px; }
-    & .navbar-input { display: none; }
-    & .navbar-menu {
-      & .addRecipe { display: none; }
+    .navbar-brand { font-size: 24px; }
+    & > .navbar-input { display: none; }
+    .navbar-menu {
+      .addRecipe { display: none; }
     }
-    & .user {
-      & .userProfileImage {
+    .user {
+      .userProfileImage {
         width: 36px;  //width & height not working
         height: 36px;
         cursor: pointer;
       }
-      & .triangle { display: none;}
-    }
+      .triangle { display: none; }
+    } 
   }
+  .resAddRecipe { display: block !important; }
 }

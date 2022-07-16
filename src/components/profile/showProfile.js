@@ -1,9 +1,6 @@
-/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-underscore-dangle */
 import './showProfile.scss';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Link, useParams,
 } from 'react-router-dom';
@@ -18,13 +15,10 @@ export default function ShowProfile({ user }) {
   const [bookmarkRecipes, setBookmarkRecipes] = useState(null);
   const [recipes, setRecipes] = useState(null);
   const [self, setSelf] = useState(true);
+  const recipesRef = useRef(null);
+  const bookmarkRecipesRef = useRef(null);
   useEffect(async () => {
-    const res = await fetch(`http://localhost:5000/users/${id || 'self'}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const result = await res.json();
+    const { result } = await fetchURL(`/users/${id || 'self'}`, 'GET');
     setProfile(result);
     setBookmarkRecipes(result.bookmarkRecipes);
   }, [id]);
@@ -42,21 +36,10 @@ export default function ShowProfile({ user }) {
     setRecipes(fetchBookmarkRecipes);
     setSelf(false);
   };
-  const style = `
-  text-decoration: underline;
-  text-decoration-color: var(--primary-color);
-  text-decoration-thickness: 4px;
-  text-underline-offset: 8px;
-`;
-  const showUnderline = (e) => {
-    const myRecipes = document.getElementById('myRecipes');
-    const bookmarks = document.getElementById('bookmarks');
-    if (e.target.id === 'myRecipes') {
-      myRecipes.style.cssText = style;
-      bookmarks.style.cssText = '';
-    } else {
-      myRecipes.style.cssText = '';
-      bookmarks.style.cssText = style;
+  const showUnderline = () => {
+    if (id === null) {
+      recipesRef.current.classList.toggle('underline');
+      bookmarkRecipesRef.current.classList.toggle('underline');
     }
   };
   return (
@@ -81,16 +64,16 @@ export default function ShowProfile({ user }) {
               {profile.lastName}
             </h2>
             <div className="popularity">
-              <Link to="/" className="link userLink">
+              <span>
                 {profile.follower.length}
                 {' '}
                 Follower
-              </Link>
-              <Link to="/" className="link userLink">
+              </span>
+              <span>
                 {profile.following.length}
                 {' '}
                 Following
-              </Link>
+              </span>
             </div>
             <EditOrFollow user={user} id={id} />
           </div>
@@ -99,18 +82,14 @@ export default function ShowProfile({ user }) {
           <div className="navigator">
             <button
               type="button"
-              id="myRecipes"
-              style={{
-                textDecoration: 'underline',
-                textDecorationThickness: '4px',
-                textDecorationColor: 'var(--primary-color)',
-                textUnderlineOffset: '8px',
-              }}
-              onClick={(e) => { showRecipes(); showUnderline(e); }}
+              id="recipes"
+              ref={recipesRef}
+              className="underline"
+              onClick={() => { showRecipes(); showUnderline(); }}
             >
-              My recipes
+              Recipes
             </button>
-            <button type="button" id="bookmarks" onClick={(e) => { showBookmarkRecipes(); showUnderline(e); }}>Bookmarks</button>
+            { id === null && <button type="button" id="bookmarks" ref={bookmarkRecipesRef} onClick={() => { showBookmarkRecipes(); showUnderline(); }}>Bookmarks</button> }
           </div>
           { recipes && recipes.length
             ? recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} self={self} />)

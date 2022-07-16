@@ -18,7 +18,6 @@ import Search from './components/search/search';
 import fetchURL from './helperFunctions/fetch';
 
 function App() {
-  console.log(process.env.REACT_APP_API_URL);
   const [user, setUser] = useState(null);
   const [fetchStatus, setFetchStatus] = useState(null);
   useEffect(async () => {
@@ -36,7 +35,6 @@ function App() {
         <Route path="login" element={<Login user={user} />} />
         {user && (
         <>
-          <Route path="/" element={<Home />} />
           <Route path="addRecipe" element={<AddRecipe />} />
           <Route path="recipes/:id" element={<Recipes user={user} />} />
           <Route path="profile" element={<Profile />}>
@@ -45,6 +43,7 @@ function App() {
           </Route>
           <Route path="search" element={<Search />} />
           <Route path="temp" element={<Temp />} />
+          <Route exact path="/" element={<Home />} />
         </>
         )}
       </Routes>
