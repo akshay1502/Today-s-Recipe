@@ -28,9 +28,7 @@
       }
     }
     .login {
-      margin-right: 32px;
       & > a {
-        margin-right:5px;
         color: white;
       }
     }
@@ -61,6 +59,7 @@
           right: 0;
           top: 2rem;
           background-color: white;
+          z-index: 1000;
           & a, li {
             text-decoration: none;
             display: block;
