@@ -1,4 +1,4 @@
-import { FaSpinner } from 'react-icons/fa';
+// import { FaSpinner } from 'react-icons/fa';
 import './loading.scss';
 
 export function Loading() {
@@ -7,10 +7,10 @@ export function Loading() {
   );
 }
 
-export function SpinnerIcon() {
+export function ReactSpinner({ icon }) {
   return (
-    <div>
-      <FaSpinner style={{ display: 'flex' }} className="spinner center" size="32px" />
+    <div className="center">
+      {icon}
     </div>
   );
 }

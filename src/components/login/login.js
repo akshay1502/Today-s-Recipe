@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { PulseLoader } from 'react-spinners';
 import './login.scss';
+import { ReactSpinner } from '../../loading';
 import fetchURL from '../../helperFunctions/fetch';
 import toastMsg from '../../helperFunctions/toast';
 
@@ -15,6 +17,7 @@ export default function Login({ user }) {
     password: '',
   });
   const [hide, setHide] = useState(false);
+  const [islogging, setIslogging] = useState(false);
   const passwordRef = useRef(null);
   useEffect(() => {
     if (user) {
@@ -51,6 +54,7 @@ export default function Login({ user }) {
     if (!email.length) { valueRequiredError.email = 'Email is required'; }
     if (!password.length) { valueRequiredError.password = 'Password is required'; }
     if (formErrors.email === '' && formErrors.password === '' && email.length && password.length) {
+      setIslogging(true);
       const { result } = await fetchURL('/login', 'POST', formValues);
       if (result.id) {
         setFormValues({
@@ -64,6 +68,7 @@ export default function Login({ user }) {
         window.history.replaceState({}, '', '/');
         window.location.reload();
       } else {
+        setIslogging(false);
         toastMsg('error', result.message);
       }
     } else {
@@ -123,7 +128,11 @@ export default function Login({ user }) {
           </label>
           <small>{formErrors.password}</small>
         </div>
-        <input type="submit" value="Login" id="loginBtn" />
+        {
+          islogging
+            ? <ReactSpinner icon={<PulseLoader />} />
+            : <input type="submit" value="Login" id="loginBtn" />
+        }
       </form>
     </div>
   );

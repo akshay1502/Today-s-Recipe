@@ -4,10 +4,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { PulseLoader } from 'react-spinners';
 import fetchURL from '../../helperFunctions/fetch';
 import toastMsg from '../../helperFunctions/toast';
 import 'react-toastify/dist/ReactToastify.css';
 import './signup.scss';
+import { ReactSpinner } from '../../loading';
 
 export default function Signup({ user }) {
   const [formValues, setFormValues] = useState({
@@ -23,6 +25,7 @@ export default function Signup({ user }) {
     password: 'Use 8 or more characters with a mix of alphabets, numbers and special characters.',
   });
   const [hide, setHide] = useState(false);
+  const [islogging, setIslogging] = useState(false);
   const passwordRef = useRef(null);
   useEffect(() => {
     if (user) {
@@ -86,6 +89,7 @@ export default function Signup({ user }) {
     && formErrors.email === ''
     && formErrors.password === ''
     && firstName.length && lastName.length && email.length && password.length) {
+      setIslogging(true);
       const { result } = await fetchURL('/signup', 'POST', formValues);
       if (result.id) {
         setFormValues({
@@ -103,6 +107,7 @@ export default function Signup({ user }) {
         window.history.replaceState({}, '', '/');
         window.location.reload();
       } else {
+        setIslogging(false);
         toastMsg('error', result.message);
       }
     } else {
@@ -189,7 +194,11 @@ export default function Signup({ user }) {
           </label>
           <small>{ formErrors.password }</small>
         </div>
-        <input type="submit" value="Sign up" id="signupBtn" />
+        {
+          islogging
+            ? <ReactSpinner icon={<PulseLoader />} />
+            : <input type="submit" value="Signup" id="loginBtn" />
+        }
       </form>
     </div>
   );

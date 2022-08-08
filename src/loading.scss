@@ -1,7 +1,7 @@
 .center {
   margin: 0 auto;
-  text-align: center;
-  margin-top: 80px;
+  display: flex;
+  justify-content: center;
 }
 .spinner {
   animation: spin infinite 1s linear;

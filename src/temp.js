@@ -1,11 +1,12 @@
-import { Loading, SpinnerIcon } from './loading';
+import { FadeLoader } from 'react-spinners';
+import { Loading, ReactSpinner } from './loading';
 import './temp.css';
 
 export default function Temp() {
   return (
     <div>
       <Loading />
-      <SpinnerIcon />
+      <ReactSpinner icon={<FadeLoader />} />
     </div>
   );
 }
