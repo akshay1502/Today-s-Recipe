@@ -9,7 +9,7 @@ export function Loading() {
 
 export function ReactSpinner({ icon }) {
   return (
-    <div className="center">
+    <div className="center top-margin">
       {icon}
     </div>
   );

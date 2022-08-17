@@ -3,15 +3,6 @@
   display: flex;
   justify-content: center;
 }
-.spinner {
-  animation: spin infinite 1s linear;
-}
-
-@keyframes spin {
-from {
-  transform: rotate(0deg);
-}
-to {
-  transform: rotate(360deg);
-}
+.top-margin {
+  margin-top: 80px;
 }
