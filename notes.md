@@ -26,3 +26,5 @@ useMemo and cache a lot of data as most as possible
 </div>
 
 use toastify for alert messages in login and signup
+
+add meta tags to html
