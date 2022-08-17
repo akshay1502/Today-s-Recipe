@@ -24,3 +24,7 @@ useMemo and cache a lot of data as most as possible
   <FaUserCircle size="2.5rem" />
   <FaAngleDown size="1rem" />
 </div>
+
+use toastify for alert messages in login and signup
+
+add meta tags to html

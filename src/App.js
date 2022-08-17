@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import React, { Suspense, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { FadeLoader } from 'react-spinners';
 import Header from './components/Header/header';
 import Home from './components/home/home';
 import Signup from './components/signup/signup';
@@ -15,7 +16,7 @@ import ShowProfile from './components/profile/showProfile';
 import Temp from './temp';
 import Search from './components/search/search';
 import fetchURL from './helperFunctions/fetch';
-import { SpinnerIcon } from './loading';
+import { ReactSpinner } from './loading';
 
 const AddRecipe = React.lazy(() => import('./components/addRecipe/addRecipe'));
 
@@ -32,7 +33,7 @@ function App() {
   return (
     <div className="App">
       { fetchStatus && <Header user={user} fetchStatus={fetchStatus} /> }
-      <Suspense fallback={<SpinnerIcon />}>
+      <Suspense fallback={<ReactSpinner icon={<FadeLoader />} />}>
         <Routes>
           <Route path="signup" element={<Signup user={user} />} />
           <Route path="login" element={<Login user={user} />} />
