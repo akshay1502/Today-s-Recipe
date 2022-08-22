@@ -69,6 +69,10 @@ export default function IconsPack({ recipe, user }) {
       alert('Comment can\'t be empty');
     }
   };
+  const shareLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toastMsg('info', 'Link copied');
+  };
 
   useEffect(() => {
     likeBtn = document.getElementById('likeBtn');
@@ -87,17 +91,17 @@ export default function IconsPack({ recipe, user }) {
       <div className="iconsPack">
         <div className="likes">
           <FiThumbsUp size="32px" strokeWidth="1.5" id="likeBtn" onClick={likeRecipe} style={{ marginRight: '12px' }} />
-          {likes.length}
+          {!!likes.length && likes.length}
         </div>
         <div className="comments">
           <FiMessageCircle size="32px" strokeWidth="1.5" id="commentBtn" onClick={() => { commentOnRecipe(); }} style={{ marginRight: '12px' }} />
-          {comments.length || 0}
+          {!!comments.length && comments.length}
         </div>
-        <div>
+        <div className="bookmark">
           <FiBookmark size="32px" strokeWidth="1.5" id="bookmarkBtn" onClick={addToBookmark} />
         </div>
-        <div>
-          <FiShare2 size="32px" strokeWidth="1.5" id="shareBtn" />
+        <div className="share">
+          <FiShare2 size="28px" strokeWidth="1.5" id="shareBtn" onClick={shareLink} />
         </div>
       </div>
       { showComments && (
