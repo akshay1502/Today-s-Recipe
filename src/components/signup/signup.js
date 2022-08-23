@@ -197,7 +197,7 @@ export default function Signup({ user }) {
         {
           islogging
             ? <ReactSpinner icon={<PulseLoader />} />
-            : <input type="submit" value="Signup" id="loginBtn" />
+            : <input type="submit" value="Signup" id="signupBtn" />
         }
       </form>
     </div>
