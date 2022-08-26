@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { useState, useEffect } from 'react';
-import fetchURL from '../../helperFunctions/fetch';
+import { useEffect, useState } from 'react';
+import useFetch from '../../helperFunctions/useFetch';
 import Card from '../card/card';
 import SearchBox from '../search/searchBox';
 import './home.scss';
@@ -8,10 +8,10 @@ import './home.scss';
 export default function Home() {
   const [recipes, setRecipes] = useState(null);
 
+  const { result } = useFetch('/recipes', 'GET');
   useEffect(async () => {
-    const { result } = await fetchURL('/recipes', 'GET');
     setRecipes(result);
-  }, []);
+  }, [result]);
   return (
     <div className="grid main">
       <SearchBox />
