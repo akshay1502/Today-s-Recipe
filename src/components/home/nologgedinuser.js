@@ -9,7 +9,7 @@ export default function NoLoggedInUser() {
         {' '}
         /
         {' '}
-        <Link to="/singup" className="noLoggedInBtn">Singup</Link>
+        <Link to="/signup" className="noLoggedInBtn">Signup</Link>
         {' '}
         to continue.
       </p>

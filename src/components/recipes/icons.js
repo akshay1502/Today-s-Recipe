@@ -21,14 +21,14 @@ export default function IconsPack({ recipe, user }) {
     bookmarkBtn = document.getElementById('bookmarkBtn');
     if (bookmark) {
       bookmarkBtn.style.fill = 'var(--bookmark-btn)';
-      const { statusValue } = await fetchURL(`/recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
-      if (statusValue === 200) {
+      const { result } = await fetchURL(`/recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
+      if (result.success) {
         setBookmark(0);
       }
     } else {
       bookmarkBtn.style.fill = 'white';
-      const { statusValue } = await fetchURL(`/recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
-      if (statusValue === 200) {
+      const { result } = await fetchURL(`/recipes/${recipeId}/bookmark`, 'PATCH', { bookmark });
+      if (result.success) {
         setBookmark(1);
       }
     }
@@ -37,14 +37,14 @@ export default function IconsPack({ recipe, user }) {
     likeBtn = document.getElementById('likeBtn');
     if (like) {
       likeBtn.style.fill = 'var(--like-btn)';
-      const { statusValue } = await fetchURL(`/recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 1 });
-      if (statusValue === 200) {
+      const { result } = await fetchURL(`/recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 1 });
+      if (result.success) {
         setLike(0);
       }
     } else {
       likeBtn.style.fill = 'white';
-      const { statusValue } = await fetchURL(`/recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 0 });
-      if (statusValue === 200) {
+      const { result } = await fetchURL(`/recipes/${recipeId}/likeOrdislike`, 'PATCH', { like: 0 });
+      if (result.success) {
         setLike(1);
       }
     }
@@ -61,8 +61,8 @@ export default function IconsPack({ recipe, user }) {
   const handleCommentInput = async () => {
     const comment = textareaRef.current.value.trim();
     if (comment.length) {
-      const { statusValue } = await fetchURL(`/recipes/${recipeId}/comment`, 'POST', { userId, comment });
-      if (statusValue === 200) {
+      const { result } = await fetchURL(`/recipes/${recipeId}/comment`, 'POST', { userId, comment });
+      if (result.success) {
         toastMsg('info', 'Comment added');
       }
     } else {

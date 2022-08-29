@@ -23,12 +23,14 @@ const AddRecipe = React.lazy(() => import('./components/addRecipe/addRecipe'));
 function App() {
   const [user, setUser] = useState(null);
   const [fetchStatus, setFetchStatus] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(async () => {
     const { result, statusValue } = await fetchURL('/users/self', 'GET');
     if (statusValue === 200) {
       setUser(result);
     }
     setFetchStatus(statusValue);
+    setLoading(false);
   }, []);
   return (
     <div className="App">
@@ -37,7 +39,7 @@ function App() {
         <Routes>
           <Route path="signup" element={<Signup user={user} />} />
           <Route path="login" element={<Login user={user} />} />
-          <Route exact path="/" element={<Home user={user} />} />
+          { !loading && <Route exact path="/" element={<Home user={user} />} /> }
           {user && (
             <>
               <Route path="addRecipe" element={<AddRecipe />} />
