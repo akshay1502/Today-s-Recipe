@@ -1,9 +1,13 @@
+/* eslint-disable no-useless-return */
 import { useEffect, useState } from 'react';
 
 export default function useFetch(url, method, data = null) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
   const [statusValue, setStatusValue] = useState(null);
   useEffect(() => {
+    setLoading(true);
     const myAbortController = new AbortController();
     const fetchData = async () => {
       try {
@@ -19,19 +23,21 @@ export default function useFetch(url, method, data = null) {
         const fetchResponse = await fetch(`${process.env.REACT_APP_API_URL}${url}`, options);
         const statusValueTemp = fetchResponse.status;
         const resultTemp = await fetchResponse.json();
-        console.log('fetching');
         setResult(resultTemp);
         setStatusValue(statusValueTemp);
-      } catch (e) {
-        if (e.name === 'AbortError') {
-          console.log('aborted the request');
-        }
+        setLoading(false);
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        setError(err);
       }
     };
     fetchData();
+
     return () => {
       myAbortController.abort();
     };
   }, [url]);
-  return { result, statusValue };
+  return {
+    loading, error, result, statusValue,
+  };
 }

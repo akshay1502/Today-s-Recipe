@@ -8,18 +8,23 @@ import './home.scss';
 export default function Home() {
   const [recipes, setRecipes] = useState(null);
 
-  const { result } = useFetch('/recipes', 'GET');
+  const { loading, error, result } = useFetch('/recipes', 'GET');
   useEffect(async () => {
     setRecipes(result);
   }, [result]);
   return (
     <div className="grid main">
-      <SearchBox />
-      {
-        recipes
-          && recipes.length
-          && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
-      }
+      {loading ? <p style={{ testAlign: 'center' }}>Loading...</p> : (
+        <>
+          <SearchBox />
+          {
+            recipes
+              && recipes.length
+              && recipes.map((recipe) => <Card key={recipe._id} recipe={recipe} />)
+          }
+        </>
+      )}
+      {error && <p>{error.message}</p>}
     </div>
   );
 }
