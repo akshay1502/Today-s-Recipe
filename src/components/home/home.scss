@@ -1,5 +1,15 @@
+@import '../../mixin.scss';
+
 .main {
   & > .navbar-input { display: none;}
+}
+.noLoggedInBtn {
+  @include btn;
+  @include btn-small;
+}
+.centerText {
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (max-width: 450px) {
